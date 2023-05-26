@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hospital_system/modules/manager_modules/manager_add_patient.dart';
-import 'package:hospital_system/modules/manager_modules/manager_update_patient.dart';
+import 'package:hospital_system/modules/manager_modules/manager_add_manger.dart';
+import 'package:hospital_system/modules/manager_modules/manager_update_manger.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_states.dart';
 
-class MangerShowPatients extends StatelessWidget {
-  const MangerShowPatients({super.key});
+class MangerShowMangers extends StatelessWidget {
+  const MangerShowMangers({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ManagerCubit, ManagerState>(
-      bloc: ManagerCubit.get(context)..getAllPatients(token: token!),
+      bloc: ManagerCubit.get(context)..getAllMangers(token: token!),
       listener: (context, state) {},
       builder: (context, state) {
         ManagerCubit cubit = ManagerCubit.get(context);
@@ -21,31 +21,31 @@ class MangerShowPatients extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
-            title: const Text('Patients'),
+            title: const Text('Mangers'),
             centerTitle: true,
           ),
-          body: state is LoadingGetAllPatients
+          body: state is LoadingGetAllMangers
               ? const Center(
                   child: CircularProgressIndicator(),
                 )
-              : cubit.getAllPatientsModel!.result!.isEmpty
+              : cubit.getAllMangersModel!.result!.isEmpty
                   ? const Center(
-                      child: Text('No Patients!'),
+                      child: Text('No Mangers!'),
                     )
                   : Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: ListView.builder(
                         physics: const BouncingScrollPhysics(),
-                        itemCount: cubit.getAllPatientsModel!.result!.length,
+                        itemCount: cubit.getAllMangersModel!.result!.length,
                         itemBuilder: (context, index) {
-                          var model = cubit.getAllPatientsModel!.result![index];
+                          var model = cubit.getAllMangersModel!.result![index];
                           return GestureDetector(
                             onTap: () {
                               navigateTo(
-                                  context, MangerUpdatePatient(id: model.sId!));
+                                  context, MangerUpdateManger(id: model.sId!));
                             },
                             child: Container(
-                              height: 260,
+                              height: 140,
                               margin: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -83,15 +83,6 @@ class MangerShowPatients extends StatelessWidget {
                                     Text('Phone: ${model.phone}'),
                                     const SizedBox(height: 4),
                                     Text('Email: ${model.email}'),
-                                    const SizedBox(height: 4),
-                                    Text('address: ${model.address}'),
-                                    const SizedBox(height: 4),
-                                    Text('dateOfBirth: ${model.dateOfBirth}'),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                        'medicalHistory: ${model.medicalHistory}'),
-                                    const SizedBox(height: 4),
-                                    Text('lastVisited: ${model.lastVisited}'),
                                   ],
                                 ),
                               ),
@@ -106,7 +97,7 @@ class MangerShowPatients extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              navigateTo(context, const MangerAddPatient());
+              navigateTo(context, MangerAddManger());
             },
           ),
         );
