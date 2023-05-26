@@ -45,7 +45,6 @@ class MangerShowPatients extends StatelessWidget {
                                   context, MangerUpdatePatient(id: model.sId!));
                             },
                             child: Container(
-                              height: 260,
                               margin: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -86,12 +85,15 @@ class MangerShowPatients extends StatelessWidget {
                                     const SizedBox(height: 4),
                                     Text('address: ${model.address}'),
                                     const SizedBox(height: 4),
-                                    Text('dateOfBirth: ${model.dateOfBirth}'),
-                                    const SizedBox(height: 4),
                                     Text(
                                         'medicalHistory: ${model.medicalHistory}'),
                                     const SizedBox(height: 4),
-                                    Text('lastVisited: ${model.lastVisited}'),
+                                    Text(
+                                        'dateOfBirth: ${formatDateToPrint(model.dateOfBirth!)}'),
+                                    const SizedBox(height: 4),
+                                    Text(
+                                        'lastVisited: ${formatDateToPrint(model.lastVisited!)}'),
+                                    const SizedBox(height: 8),
                                   ],
                                 ),
                               ),
@@ -106,7 +108,7 @@ class MangerShowPatients extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: () {
-              navigateTo(context, const MangerAddPatient());
+              navigateTo(context, MangerAddPatient());
             },
           ),
         );

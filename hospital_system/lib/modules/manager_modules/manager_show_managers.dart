@@ -45,7 +45,6 @@ class MangerShowMangers extends StatelessWidget {
                                   context, MangerUpdateManger(id: model.sId!));
                             },
                             child: Container(
-                              height: 140,
                               margin: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -83,6 +82,7 @@ class MangerShowMangers extends StatelessWidget {
                                     Text('Phone: ${model.phone}'),
                                     const SizedBox(height: 4),
                                     Text('Email: ${model.email}'),
+                                    const SizedBox(height: 8),
                                   ],
                                 ),
                               ),

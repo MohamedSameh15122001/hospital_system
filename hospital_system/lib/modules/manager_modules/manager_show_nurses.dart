@@ -45,7 +45,6 @@ class MangerShowNurses extends StatelessWidget {
                                   context, MangerUpdateNurse(id: model.sId!));
                             },
                             child: Container(
-                              height: 180,
                               margin: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -87,6 +86,7 @@ class MangerShowNurses extends StatelessWidget {
                                     Text('Address: ${model.address}'),
                                     const SizedBox(height: 4),
                                     Text('department: ${model.department}'),
+                                    const SizedBox(height: 8),
                                   ],
                                 ),
                               ),

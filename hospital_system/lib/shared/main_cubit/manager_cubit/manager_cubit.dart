@@ -828,8 +828,8 @@ class ManagerCubit extends Cubit<ManagerState> {
       required String id,
       required String phone,
       required String address,
-      required String dateOfBirth,
       required String medicalHistory,
+      required String dateOfBirth,
       required String lastVisited,
       required String token,
       required context}) async {
@@ -1011,7 +1011,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       'name': name,
       'email': email,
       'phone': phone,
-      'department': medicalHistory,
+      'medicalHistory': medicalHistory,
       'lastVisited': lastVisited,
       'dateOfBirth': dateOfBirth,
       'address': address
@@ -1032,6 +1032,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         Navigator.pop(context);
+        await getAllPatients(token: token);
         emit(SuccessUpdatePatientAccount());
       } else {
         // Request failed

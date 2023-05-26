@@ -56,12 +56,17 @@ class MangerAddManger extends StatelessWidget {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter name';
+                        } else if (value.length < 3) {
+                          return 'Name must be between min 3 characters';
+                        } else if (value.length > 30) {
+                          return 'Name must be between max 30 characters';
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       decoration: InputDecoration(
                         labelText: 'Email',
@@ -76,12 +81,15 @@ class MangerAddManger extends StatelessWidget {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter email';
+                        } else if (isValidEmail(value.toString()) == false) {
+                          return 'Email format is incorrect';
                         }
                         return null;
                       },
                     ),
                     const SizedBox(height: 16.0),
                     TextFormField(
+                      keyboardType: TextInputType.phone,
                       controller: phoneController,
                       decoration: InputDecoration(
                         labelText: 'Phone',
@@ -96,6 +104,8 @@ class MangerAddManger extends StatelessWidget {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter phone';
+                        } else if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
+                          return 'Invalid phone number. Please enter only numeric digits';
                         }
                         return null;
                       },
@@ -116,6 +126,8 @@ class MangerAddManger extends StatelessWidget {
                       validator: (value) {
                         if (value!.isEmpty) {
                           return 'Please enter ID';
+                        } else if (!RegExp(r'^Mr.{6}$').hasMatch(value)) {
+                          return 'ID should start with "Mr" and have a total length of 8 characters';
                         }
                         return null;
                       },

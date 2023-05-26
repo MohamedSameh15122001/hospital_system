@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 
 bool isNetworkConnection = true;
 Future<void> internetConection(context) async {
@@ -23,6 +24,65 @@ Future<void> internetConection(context) async {
     //     ),
     //   );
   }
+}
+
+Future<void> selectTime(
+    context, TextEditingController controller, TimeOfDay selectedTime) async {
+  final TimeOfDay? pickedTime = await showTimePicker(
+    context: context,
+    initialTime: TimeOfDay.now(),
+  );
+
+  if (pickedTime != null) {
+    // setState(() {
+    selectedTime = pickedTime;
+    controller.text = pickedTime.format(context);
+    // });
+  }
+}
+
+Future<void> selectDate(
+    BuildContext context, TextEditingController controller) async {
+  final DateTime? picked = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2100),
+  );
+
+  if (picked != null) {
+    controller.text = picked.toString();
+  }
+}
+
+bool isValidEmail(email) {
+  return RegExp(
+    r'^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$',
+  ).hasMatch(email);
+}
+
+bool isValidPass(pass) {
+  return RegExp(r"^(?=.*[a-zA-Z])(?=.*\d).{8,}$").hasMatch(pass);
+}
+
+String formatDateToPrint(String dateStr) {
+  // to convert to 15-12-2000
+  DateTime dateTime = DateTime.parse(dateStr);
+  String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
+  // to convert to 15/12/2000
+  // final originalFormat = DateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+  // final parsedDate = originalFormat.parse(dateStr);
+  // final newFormat = DateFormat("dd/MM/yyyy");
+  // final formattedDate = newFormat.format(parsedDate);
+  return formattedDate;
+}
+
+String formatDateToGetFromDatePicker(String dateStr) {
+  final originalFormat = DateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+  final parsedDate = originalFormat.parse(dateStr);
+  final newFormat = DateFormat("dd-MM-yyyy");
+  final formattedDate = newFormat.format(parsedDate);
+  return formattedDate;
 }
 
 // String getDate(formattedString) {

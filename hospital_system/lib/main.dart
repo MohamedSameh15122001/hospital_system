@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hospital_system/modules/doctor_modules/doctor_layout.dart';
-import 'package:hospital_system/modules/login.dart';
-import 'package:hospital_system/modules/manager_modules/manager_home.dart';
-import 'package:hospital_system/modules/nurse_modules/nurse_layout.dart';
-import 'package:hospital_system/modules/patient_modules/patient_layout.dart';
+import 'package:hospital_system/modules/splash.dart';
 import 'package:hospital_system/shared/another/cache_helper.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
@@ -63,17 +59,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.grey.shade200,
           primarySwatch: primaryColor,
         ),
-        home: token == null
-            ? Login()
-            : who == "Manger"
-                ? const MangerHome()
-                : who == "Doctor"
-                    ? const DoctorLayout()
-                    : who == "Nurse"
-                        ? const NurseLayout()
-                        : who == "Patient"
-                            ? const PatientLayout()
-                            : Login(),
+        home: SplashScreen(who: who),
       ),
     );
   }

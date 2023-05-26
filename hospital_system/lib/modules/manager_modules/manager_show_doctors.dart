@@ -46,7 +46,6 @@ class MangerShowDoctors extends StatelessWidget {
                                   context, MangerUpdateDoctor(id: model.sId!));
                             },
                             child: Container(
-                              height: 150,
                               margin: const EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                 boxShadow: [
@@ -86,6 +85,7 @@ class MangerShowDoctors extends StatelessWidget {
                                     Text('Email: ${model.email}'),
                                     const SizedBox(height: 4),
                                     Text('Specialty: ${model.specialty}'),
+                                    const SizedBox(height: 8),
                                   ],
                                 ),
                               ),
