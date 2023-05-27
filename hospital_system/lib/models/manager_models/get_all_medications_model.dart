@@ -1,7 +1,7 @@
-class GetAllmedicationsModel {
+class GetAllMedicationsModel {
   List<Result>? result;
 
-  GetAllmedicationsModel.fromJson(Map<String, dynamic> json) {
+  GetAllMedicationsModel.fromJson(Map<String, dynamic> json) {
     if (json['result'] != null) {
       result = <Result>[];
       json['result'].forEach((v) {
@@ -14,8 +14,8 @@ class GetAllmedicationsModel {
 class Result {
   String? sId;
   String? name;
-  List<String>? activeIngredients;
-  List<String>? doses;
+  String? activeIngredients;
+  String? doses;
   String? warnings;
   String? sideEffects;
   int? iV;
@@ -23,8 +23,8 @@ class Result {
   Result.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     name = json['name'];
-    activeIngredients = json['activeIngredients'].cast<String>();
-    doses = json['doses'].cast<String>();
+    activeIngredients = json['activeIngredients'];
+    doses = json['doses'];
     warnings = json['warnings'];
     sideEffects = json['sideEffects'];
     iV = json['__v'];

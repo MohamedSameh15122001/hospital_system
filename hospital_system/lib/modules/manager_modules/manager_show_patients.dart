@@ -85,6 +85,8 @@ class MangerShowPatients extends StatelessWidget {
                                     const SizedBox(height: 4),
                                     Text('address: ${model.address}'),
                                     const SizedBox(height: 4),
+                                    Text('sex: ${model.sex}'),
+                                    const SizedBox(height: 4),
                                     Text(
                                         'medicalHistory: ${model.medicalHistory}'),
                                     const SizedBox(height: 4),

@@ -252,6 +252,50 @@ class MangerAddPatient extends StatelessWidget {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 16),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                            10), // Set the desired border radius
+                        color: Colors.white, // Set the desired background color
+                      ),
+                      child: ListTile(
+                        leading: Icon(
+                          cubit.sex == 'male' ? Icons.man : Icons.woman,
+                          size: 30,
+                        ),
+                        title: Row(
+                          children: [
+                            const Text(
+                              'Sex',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            ),
+                            const Spacer(),
+                            DropdownButton(
+                              items: cubit.items.map((valueItem) {
+                                return DropdownMenuItem(
+                                  value: valueItem,
+                                  child: Text(
+                                    valueItem,
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                cubit.changeDropDownButton(newValue!);
+                              },
+                              value: cubit.sex,
+                              underline: const SizedBox(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     const SizedBox(height: 20),
                     state is LoadingCreatePatientAccount
                         ? const Center(child: CircularProgressIndicator())
@@ -261,6 +305,7 @@ class MangerAddPatient extends StatelessWidget {
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
                                   await cubit.createPatientAccount(
+                                      sex: cubit.sex,
                                       name: nameController.text.trim(),
                                       email: emailController.text.trim(),
                                       phone: phoneController.text.trim(),

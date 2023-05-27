@@ -2,6 +2,9 @@ class ManagerState {}
 
 class ManagerInitial extends ManagerState {}
 
+// Change dropdownbutton state
+class ChangeDropDownButton extends ManagerState {}
+
 // Change Radio State
 class ChangeRadio extends ManagerState {}
 
@@ -230,49 +233,49 @@ class ErrorGetSpecificPatient extends ManagerState {}
 //======================================================================
 
 //======================================================================
-// Start medication
+// Start Medication
 //======================================================================
 
-// Create medication
-class LoadingCreatemedication extends ManagerState {}
+// Create Medication
+class LoadingCreateMedication extends ManagerState {}
 
-class SuccessCreatemedication extends ManagerState {}
+class SuccessCreateMedication extends ManagerState {}
 
-class ErrorCreatemedication extends ManagerState {}
-// Create medication
+class ErrorCreateMedication extends ManagerState {}
+// Create Medication
 
-// Get All medications
-class LoadingGetAllmedications extends ManagerState {}
+// Get All Medications
+class LoadingGetAllMedications extends ManagerState {}
 
-class SuccessGetAllmedications extends ManagerState {}
+class SuccessGetAllMedications extends ManagerState {}
 
-class ErrorGetAllmedications extends ManagerState {}
-// Get All medications
+class ErrorGetAllMedications extends ManagerState {}
+// Get All Medications
 
-// Delete medication
-class LoadingDeletemedication extends ManagerState {}
+// Delete Medication
+class LoadingDeleteMedication extends ManagerState {}
 
-class SuccessDeletemedication extends ManagerState {}
+class SuccessDeleteMedication extends ManagerState {}
 
-class ErrorDeletemedication extends ManagerState {}
-// Delete medication
+class ErrorDeleteMedication extends ManagerState {}
+// Delete Medication
 
-// Update medication
-class LoadingUpdatemedication extends ManagerState {}
+// Update Medication
+class LoadingUpdateMedication extends ManagerState {}
 
-class SuccessUpdatemedication extends ManagerState {}
+class SuccessUpdateMedication extends ManagerState {}
 
-class ErrorUpdatemedication extends ManagerState {}
-// Update medication
+class ErrorUpdateMedication extends ManagerState {}
+// Update Medication
 
-// Get Specific medication
-class LoadingGetSpecificmedication extends ManagerState {}
+// Get Specific Medication
+class LoadingGetSpecificMedication extends ManagerState {}
 
-class SuccessGetSpecificmedication extends ManagerState {}
+class SuccessGetSpecificMedication extends ManagerState {}
 
-class ErrorGetSpecificmedication extends ManagerState {}
-// Get Specific medication
+class ErrorGetSpecificMedication extends ManagerState {}
+// Get Specific Medication
 
 //======================================================================
-// End medication
+// End Medication
 //======================================================================

@@ -20,6 +20,7 @@ class Result {
   String? profileImage;
   String? cloudinaryId;
   String? role;
+  String? sex;
   int? iV;
 
   Result.fromJson(Map<String, dynamic> json) {
@@ -36,6 +37,7 @@ class Result {
     profileImage = json['profileImage'];
     cloudinaryId = json['cloudinary_id'];
     role = json['role'];
+    sex = json['sex'];
     iV = json['__v'];
   }
 }

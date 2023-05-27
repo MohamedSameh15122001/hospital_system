@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hospital_system/models/manager_models/get_specific_medication_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hospital_system/models/error_model.dart';
+import '../../../models/manager_models/get_all_medications_model.dart';
 import '../../../modules/nurse_modules/nurse_layout.dart';
 import 'package:hospital_system/models/success_model.dart';
 import '../../../modules/patient_modules/patient_layout.dart';
@@ -13,12 +15,10 @@ import 'package:hospital_system/shared/components/end_points.dart';
 import '../../../models/manager_models/get_all_doctors_model.dart';
 import '../../../models/manager_models/get_all_patients_model.dart';
 import '../../../models/manager_models/get_specific_nurse_model.dart';
-import '../../../models/manager_models/get_all_medications_model.dart';
 import '../../../models/manager_models/get_specific_doctor_model.dart';
 import '../../../models/manager_models/get_specific_patient_model.dart';
 import 'package:hospital_system/modules/doctor_modules/doctor_layout.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
-import '../../../models/manager_models/get_specific_medication_model.dart';
 import 'package:hospital_system/models/manager_models/get_all_nurses_model.dart';
 import 'package:hospital_system/models/manager_models/get_all_mangers_model.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_states.dart';
@@ -44,8 +44,17 @@ class ManagerCubit extends Cubit<ManagerState> {
     'Medicines',
   ];
 
+  // Change dropdownbutton
+  List<String> items = ['male', 'female'];
+  String sex = 'male';
+  void changeDropDownButton(String newValue) {
+    sex = newValue;
+    emit(ChangeDropDownButton());
+  }
+
+  // Change radio
   String who = "Manger";
-  changeRadio(value) {
+  void changeRadio(value) {
     who = value;
     emit(ChangeRadio());
   }
@@ -831,6 +840,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       required String medicalHistory,
       required String dateOfBirth,
       required String lastVisited,
+      required String sex,
       required String token,
       required context}) async {
     emit(LoadingCreatePatientAccount());
@@ -845,6 +855,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       'dateOfBirth': dateOfBirth,
       'medicalHistory': medicalHistory,
       'lastVisited': lastVisited,
+      'sex': sex
     });
 
     try {
@@ -1089,19 +1100,19 @@ class ManagerCubit extends Cubit<ManagerState> {
   //======================================================================
 
   //======================================================================
-  // Start medication
+  // Start Medication
   //======================================================================
 
-  // Create medication
-  Future<void> createmedication(
+  // Create Medication
+  Future<void> createMedication(
       {required String name,
-      required List<String> activeIngredients,
-      required List<String> doses,
+      required String activeIngredients,
+      required String doses,
       required String warnings,
       required String sideEffects,
       required String token,
       required context}) async {
-    emit(LoadingCreatemedication());
+    emit(LoadingCreateMedication());
 
     // Convert the request body to JSON
     String jsonBody = jsonEncode({
@@ -1127,27 +1138,29 @@ class ManagerCubit extends Cubit<ManagerState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         Navigator.pop(context);
-        await getAllmedications(token: token);
-        emit(SuccessCreatemedication());
+        await getAllMedications(token: token);
+        emit(SuccessCreateMedication());
       } else {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
+        print(errorResponse);
+        print('---------------------------');
         showToast(text: errorModel!.message!, state: ToastStates.WARNING);
-        emit(ErrorCreatemedication());
+        emit(ErrorCreateMedication());
       }
     } catch (e) {
       // An error occurred
       showToast(text: 'error $e', state: ToastStates.ERROR);
-      emit(ErrorCreatemedication());
+      emit(ErrorCreateMedication());
     }
   }
-  // Create medication
+  // Create Medication
 
-  // Get All medications
-  GetAllmedicationsModel? getAllmedicationsModel;
-  Future<void> getAllmedications({required String token}) async {
-    emit(LoadingGetAllmedications());
+  // Get All Medications
+  GetAllMedicationsModel? getAllMedicationsModel;
+  Future<void> getAllMedications({required String token}) async {
+    emit(LoadingGetAllMedications());
 
     try {
       // Make the GET request
@@ -1160,28 +1173,28 @@ class ManagerCubit extends Cubit<ManagerState> {
       if (response.statusCode == 200) {
         // Request successful
         Map<String, dynamic> successResponse = jsonDecode(response.body);
-        getAllmedicationsModel =
-            GetAllmedicationsModel.fromJson(successResponse);
-        emit(SuccessGetAllmedications());
+        getAllMedicationsModel =
+            GetAllMedicationsModel.fromJson(successResponse);
+        emit(SuccessGetAllMedications());
       } else {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
         showToast(text: errorModel!.message!, state: ToastStates.WARNING);
-        emit(ErrorGetAllmedications());
+        emit(ErrorGetAllMedications());
       }
     } catch (e) {
       // An error occurred
       showToast(text: 'error $e', state: ToastStates.ERROR);
-      emit(ErrorGetAllmedications());
+      emit(ErrorGetAllMedications());
     }
   }
-  // Get All medications
+  // Get All Medications
 
-  // Delete medication
-  Future<void> deletemedication(
+  // Delete Medication
+  Future<void> deleteMedication(
       {required String token, required String id, required context}) async {
-    emit(LoadingDeletemedication());
+    emit(LoadingDeleteMedication());
 
     try {
       // Make the DELETE request
@@ -1197,35 +1210,35 @@ class ManagerCubit extends Cubit<ManagerState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         Navigator.pop(context);
-        await getAllmedications(token: token);
-        emit(SuccessDeletemedication());
+        await getAllMedications(token: token);
+        emit(SuccessDeleteMedication());
       } else {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
         showToast(text: errorModel!.message!, state: ToastStates.WARNING);
-        emit(ErrorDeletemedication());
+        emit(ErrorDeleteMedication());
       }
     } catch (e) {
       // An error occurred
       showToast(text: 'error $e', state: ToastStates.ERROR);
-      emit(ErrorDeletemedication());
+      emit(ErrorDeleteMedication());
     }
   }
-  // Delete medication
+  // Delete Medication
 
-  // Update medication
-  Future<void> updatemedication({
+  // Update Medication
+  Future<void> updateMedication({
     required String name,
-    required List<String> activeIngredients,
-    required List<String> doses,
+    required String activeIngredients,
+    required String doses,
     required String warnings,
     required String sideEffects,
     required String id,
     required String token,
     required context,
   }) async {
-    emit(LoadingUpdatemedication());
+    emit(LoadingUpdateMedication());
 
     // Convert the request body to JSON
     String jsonBody = jsonEncode({
@@ -1251,27 +1264,28 @@ class ManagerCubit extends Cubit<ManagerState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         Navigator.pop(context);
-        emit(SuccessUpdatemedication());
+        await getAllMedications(token: token);
+        emit(SuccessUpdateMedication());
       } else {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
         showToast(text: errorModel!.message!, state: ToastStates.WARNING);
-        emit(ErrorUpdatemedication());
+        emit(ErrorUpdateMedication());
       }
     } catch (e) {
       // An error occurred
       showToast(text: 'error $e', state: ToastStates.ERROR);
-      emit(ErrorUpdatemedication());
+      emit(ErrorUpdateMedication());
     }
   }
-  // Update medication
+  // Update Medication
 
-  // Get Specific medication
-  GetSpecificmedicationModel? getSpecificmedicationModel;
-  Future<void> getSpecificmedication(
+  // Get Specific Medication
+  GetSpecificMedicationModel? getSpecificMedicationModel;
+  Future<void> getSpecificMedication(
       {required String token, required String id}) async {
-    emit(LoadingGetSpecificmedication());
+    emit(LoadingGetSpecificMedication());
 
     try {
       // Make the GET request
@@ -1284,25 +1298,25 @@ class ManagerCubit extends Cubit<ManagerState> {
       if (response.statusCode == 200) {
         // Request successful
         Map<String, dynamic> successResponse = jsonDecode(response.body);
-        getSpecificmedicationModel =
-            GetSpecificmedicationModel.fromJson(successResponse);
-        emit(SuccessGetSpecificmedication());
+        getSpecificMedicationModel =
+            GetSpecificMedicationModel.fromJson(successResponse);
+        emit(SuccessGetSpecificMedication());
       } else {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
         showToast(text: errorModel!.message!, state: ToastStates.WARNING);
-        emit(ErrorGetSpecificmedication());
+        emit(ErrorGetSpecificMedication());
       }
     } catch (e) {
       // An error occurred
       showToast(text: 'error $e', state: ToastStates.ERROR);
-      emit(ErrorGetSpecificmedication());
+      emit(ErrorGetSpecificMedication());
     }
   }
-  // Get Specific medication
+  // Get Specific Medication
 
   //======================================================================
-  // End medication
+  // End Medication
   //======================================================================
 }
