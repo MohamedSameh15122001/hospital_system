@@ -10,6 +10,8 @@ import 'package:hospital_system/shared/components/constants.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_states.dart';
 
+import 'manger_show_default_passwords.dart';
+
 class MangerHome extends StatelessWidget {
   const MangerHome({super.key});
 
@@ -53,11 +55,16 @@ class MangerHome extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-                      const CircleAvatar(
-                        backgroundColor: Color(0x3850DEC9),
-                        radius: 24,
-                        backgroundImage:
-                            AssetImage('lib/assets/images/manger.png'),
+                      InkWell(
+                        onTap: () async {
+                          await signOut(context);
+                        },
+                        child: const CircleAvatar(
+                          backgroundColor: Color(0x3850DEC9),
+                          radius: 24,
+                          backgroundImage:
+                              AssetImage('lib/assets/images/manger.png'),
+                        ),
                       ),
                     ],
                   ),
@@ -65,7 +72,7 @@ class MangerHome extends StatelessWidget {
                   Expanded(
                     child: GridView.builder(
                       physics: const BouncingScrollPhysics(),
-                      itemCount: 5,
+                      itemCount: 6,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2, childAspectRatio: .8),
@@ -88,6 +95,10 @@ class MangerHome extends StatelessWidget {
                               case 4:
                                 navigateTo(
                                     context, const MangerShowMedicines());
+                                break;
+                              case 5:
+                                navigateTo(context,
+                                    const MangerShowDefaultPasswords());
                                 break;
                               default:
                             }

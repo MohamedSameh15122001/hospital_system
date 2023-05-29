@@ -3,7 +3,12 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hospital_system/modules/login.dart';
+import 'package:hospital_system/shared/another/cache_helper.dart';
+import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:intl/intl.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
 bool isNetworkConnection = true;
 Future<void> internetConection(context) async {
@@ -15,15 +20,21 @@ Future<void> internetConection(context) async {
   } on SocketException catch (_) {
     isNetworkConnection = false;
     showSnackBar(context, 'Please Check Your Internet');
-    // showTopSnackBar(
-    //     context,
-    //     const CustomSnackBar.success(
-    //       backgroundColor: Colors.red,
-    //       message: 'Please Check Your Internet',
-    //       // icon: Icon(null),
-    //     ),
-    //   );
+    showTopSnackBar(
+      context,
+      const CustomSnackBar.success(
+        backgroundColor: Colors.red,
+        message: 'Please Check Your Internet',
+        // icon: Icon(null),
+      ),
+    );
   }
+}
+
+Future<void> signOut(context) async {
+  await CacheHelper.removeData('token');
+  token = null;
+  navigateAndFinish(context, Login());
 }
 
 Future<void> selectTime(

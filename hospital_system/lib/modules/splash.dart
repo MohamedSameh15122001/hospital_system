@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:hospital_system/modules/doctor_modules/doctor_layout.dart';
+import 'package:hospital_system/modules/doctor_modules/doctor_home.dart';
 import 'package:hospital_system/modules/login.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
 import 'package:hospital_system/modules/nurse_modules/nurse_layout.dart';
@@ -45,15 +45,15 @@ class SplashScreen extends StatelessWidget {
       //     end: Alignment.bottomCenter,
       //     colors: <Color>[Colors.green, Colors.blue]),
       done: Done(
-        token == null
+        token == null || token!.isEmpty
             ? Login()
-            : who == "Manger"
+            : who == "manger"
                 ? const MangerHome()
-                : who == "Doctor"
-                    ? const DoctorLayout()
-                    : who == "Nurse"
+                : who == "doctor"
+                    ? const DoctorHome()
+                    : who == "nurse"
                         ? const NurseLayout()
-                        : who == "Patient"
+                        : who == "patient"
                             ? const PatientLayout()
                             : Login(),
         animationDuration: const Duration(seconds: 2),

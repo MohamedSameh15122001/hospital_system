@@ -15,12 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
-  await CacheHelper.saveData(
-      key: 'token',
-      value:
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOiI2NDZmZjgyNWZhZGU5ZGRiODQ4MWIxZDkiLCJuYW1lIjoiTW9oYW1lZCBOYXNzZXIiLCJyb2xlIjoibWFuZ2VyIiwiaWF0IjoxNjg1MDU5NzI2fQ.A_1BKkdHkEwJehZmheKbEIjzke3dencdr07Pu4ZyEu8');
   token = CacheHelper.getData('token');
-  await CacheHelper.saveData(key: 'who', value: 'Manger');
   String who = await CacheHelper.getData('who');
   runApp(MyApp(who: who));
 }
@@ -59,7 +54,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.grey.shade200,
           primarySwatch: primaryColor,
         ),
-        home: SplashScreen(who: who),
+        home: SplashScreen(who: who), //SplashScreen(who: who)
       ),
     );
   }

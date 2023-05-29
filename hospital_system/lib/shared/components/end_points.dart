@@ -23,3 +23,7 @@ const String patients = '/patients';
 const String patientsAuth = '/patients/auth';
 
 const String medications = '/medications';
+
+const String diagnoses = '/diagnoses';
+
+const String diagnosis = '/diagnosis';

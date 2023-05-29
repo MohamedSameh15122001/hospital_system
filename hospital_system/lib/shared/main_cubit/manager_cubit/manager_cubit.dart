@@ -17,7 +17,7 @@ import '../../../models/manager_models/get_all_patients_model.dart';
 import '../../../models/manager_models/get_specific_nurse_model.dart';
 import '../../../models/manager_models/get_specific_doctor_model.dart';
 import '../../../models/manager_models/get_specific_patient_model.dart';
-import 'package:hospital_system/modules/doctor_modules/doctor_layout.dart';
+import 'package:hospital_system/modules/doctor_modules/doctor_home.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
 import 'package:hospital_system/models/manager_models/get_all_nurses_model.dart';
 import 'package:hospital_system/models/manager_models/get_all_mangers_model.dart';
@@ -35,6 +35,7 @@ class ManagerCubit extends Cubit<ManagerState> {
     'lib/assets/images/nurse.png',
     'lib/assets/images/patient.png',
     'lib/assets/images/medication.jpg',
+    'lib/assets/images/password.png',
   ];
   List<String> names = [
     'Mangers',
@@ -42,6 +43,7 @@ class ManagerCubit extends Cubit<ManagerState> {
     'Nurses',
     'Patients',
     'Medicines',
+    'Passwords',
   ];
 
   // Change dropdownbutton
@@ -136,8 +138,9 @@ class ManagerCubit extends Cubit<ManagerState> {
         loginSuccessModel = LoginSuccessModel.fromJson(successResponse);
         showToast(
             text: loginSuccessModel!.message!, state: ToastStates.SUCCESS);
-        CacheHelper.saveData(key: 'token', value: loginSuccessModel!.token);
-        CacheHelper.saveData(key: 'who', value: 'Manger');
+        await CacheHelper.saveData(
+            key: 'token', value: loginSuccessModel!.token);
+        await CacheHelper.saveData(key: 'who', value: 'manger');
         token = loginSuccessModel!.token;
         navigateAndFinish(context, const MangerHome());
         emit(SuccessMangerLogin());
@@ -389,10 +392,11 @@ class ManagerCubit extends Cubit<ManagerState> {
         loginSuccessModel = LoginSuccessModel.fromJson(successResponse);
         showToast(
             text: loginSuccessModel!.message!, state: ToastStates.SUCCESS);
-        CacheHelper.saveData(key: 'token', value: loginSuccessModel!.token);
-        CacheHelper.saveData(key: 'who', value: 'Doctor');
+        await CacheHelper.saveData(
+            key: 'token', value: loginSuccessModel!.token);
+        await CacheHelper.saveData(key: 'who', value: 'doctor');
         token = loginSuccessModel!.token;
-        navigateAndFinish(context, const DoctorLayout());
+        navigateAndFinish(context, const DoctorHome());
         emit(SuccessDoctorLogin());
       } else {
         // Request failed
@@ -645,8 +649,9 @@ class ManagerCubit extends Cubit<ManagerState> {
         loginSuccessModel = LoginSuccessModel.fromJson(successResponse);
         showToast(
             text: loginSuccessModel!.message!, state: ToastStates.SUCCESS);
-        CacheHelper.saveData(key: 'token', value: loginSuccessModel!.token);
-        CacheHelper.saveData(key: 'who', value: 'Nurse');
+        await CacheHelper.saveData(
+            key: 'token', value: loginSuccessModel!.token);
+        await CacheHelper.saveData(key: 'who', value: 'nurse');
         token = loginSuccessModel!.token;
         navigateAndFinish(context, const NurseLayout());
         emit(SuccessNurseLogin());
@@ -913,8 +918,9 @@ class ManagerCubit extends Cubit<ManagerState> {
         loginSuccessModel = LoginSuccessModel.fromJson(successResponse);
         showToast(
             text: loginSuccessModel!.message!, state: ToastStates.SUCCESS);
-        CacheHelper.saveData(key: 'token', value: loginSuccessModel!.token);
-        CacheHelper.saveData(key: 'who', value: 'Patient');
+        await CacheHelper.saveData(
+            key: 'token', value: loginSuccessModel!.token);
+        await CacheHelper.saveData(key: 'who', value: 'patient');
         token = loginSuccessModel!.token;
         navigateAndFinish(context, const PatientLayout());
         emit(SuccessPatientLogin());
@@ -1144,8 +1150,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
-        print(errorResponse);
-        print('---------------------------');
+
         showToast(text: errorModel!.message!, state: ToastStates.WARNING);
         emit(ErrorCreateMedication());
       }
