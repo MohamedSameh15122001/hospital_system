@@ -142,7 +142,7 @@ class ManagerCubit extends Cubit<ManagerState> {
             key: 'token', value: loginSuccessModel!.token);
         await CacheHelper.saveData(key: 'who', value: 'manger');
         token = loginSuccessModel!.token;
-        navigateAndFinish(context, const MangerHome());
+        navigateAndFinishWithFade(context, const MangerHome());
         emit(SuccessMangerLogin());
       } else {
         // Request failed
@@ -396,7 +396,7 @@ class ManagerCubit extends Cubit<ManagerState> {
             key: 'token', value: loginSuccessModel!.token);
         await CacheHelper.saveData(key: 'who', value: 'doctor');
         token = loginSuccessModel!.token;
-        navigateAndFinish(context, const DoctorHome());
+        navigateAndFinishWithFade(context, const DoctorHome());
         emit(SuccessDoctorLogin());
       } else {
         // Request failed
@@ -653,7 +653,7 @@ class ManagerCubit extends Cubit<ManagerState> {
             key: 'token', value: loginSuccessModel!.token);
         await CacheHelper.saveData(key: 'who', value: 'nurse');
         token = loginSuccessModel!.token;
-        navigateAndFinish(context, const NurseLayout());
+        navigateAndFinishWithFade(context, const NurseLayout());
         emit(SuccessNurseLogin());
       } else {
         // Request failed
@@ -922,7 +922,7 @@ class ManagerCubit extends Cubit<ManagerState> {
             key: 'token', value: loginSuccessModel!.token);
         await CacheHelper.saveData(key: 'who', value: 'patient');
         token = loginSuccessModel!.token;
-        navigateAndFinish(context, const PatientLayout());
+        navigateAndFinishWithFade(context, const PatientLayout());
         emit(SuccessPatientLogin());
       } else {
         // Request failed

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 
 class MangerShowDefaultPasswords extends StatelessWidget {
@@ -13,20 +14,27 @@ class MangerShowDefaultPasswords extends StatelessWidget {
           title: const Text('Default Passwords'),
           centerTitle: true,
         ),
-        body: const SizedBox(
+        body: SizedBox(
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              PasswordCard(role: 'Manager', password: 'Manger#2023'),
-              SizedBox(height: 16),
-              PasswordCard(role: 'Doctor', password: 'Doctor#2023'),
-              SizedBox(height: 16),
-              PasswordCard(role: 'Nurse', password: 'Nurse#2023'),
-              SizedBox(height: 16),
-              PasswordCard(role: 'Patient', password: 'Patient#2023'),
-            ],
+            children: AnimationConfiguration.toStaggeredList(
+                duration: const Duration(milliseconds: 500),
+                childAnimationBuilder: (widget) => FlipAnimation(
+                      child: FadeInAnimation(
+                        child: widget,
+                      ),
+                    ),
+                children: [
+                  const PasswordCard(role: 'Manager', password: 'Manger#2023'),
+                  const SizedBox(height: 16),
+                  const PasswordCard(role: 'Doctor', password: 'Doctor#2023'),
+                  const SizedBox(height: 16),
+                  const PasswordCard(role: 'Nurse', password: 'Nurse#2023'),
+                  const SizedBox(height: 16),
+                  const PasswordCard(role: 'Patient', password: 'Patient#2023'),
+                ]),
           ),
         ));
   }

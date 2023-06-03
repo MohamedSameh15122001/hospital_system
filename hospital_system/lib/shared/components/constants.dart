@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hospital_system/modules/login.dart';
 import 'package:hospital_system/shared/another/cache_helper.dart';
+import 'package:hospital_system/shared/components/components.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:intl/intl.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
@@ -34,7 +35,7 @@ Future<void> internetConection(context) async {
 Future<void> signOut(context) async {
   await CacheHelper.removeData('token');
   token = null;
-  navigateAndFinish(context, Login());
+  navigateAndFinishWithFade(context, Login());
 }
 
 Future<void> selectTime(
@@ -170,21 +171,35 @@ showSnackBar(context, msg) {
       )));
 }
 
-void navigateTo(context, widget) {
+// void navigateTo(context, widget) {
+//   Navigator.push(
+//     context,
+//     MaterialPageRoute(
+//       builder: (context) => widget,
+//     ),
+//   );
+// }
+
+void navigateToWithFade(context, widget) {
   Navigator.push(
     context,
-    MaterialPageRoute(
-      builder: (context) => widget,
-    ),
+    FadeRoute(widget),
   );
 }
 
-void navigateAndFinish(context, widget) {
+// void navigateAndFinish(context, widget) {
+//   Navigator.pushAndRemoveUntil(
+//     context,
+//     MaterialPageRoute(
+//       builder: (context) => widget,
+//     ),
+//     (Route<dynamic> route) => false,
+//   );
+// }
+void navigateAndFinishWithFade(context, widget) {
   Navigator.pushAndRemoveUntil(
     context,
-    MaterialPageRoute(
-      builder: (context) => widget,
-    ),
+    FadeRoute(widget),
     (Route<dynamic> route) => false,
   );
 }

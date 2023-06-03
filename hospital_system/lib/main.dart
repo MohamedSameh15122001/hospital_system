@@ -1,8 +1,10 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hospital_system/modules/splash.dart';
 import 'package:hospital_system/shared/another/cache_helper.dart';
+import 'package:hospital_system/shared/another/push_notification_service.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:hospital_system/shared/main_cubit/bloc_observer.dart';
@@ -13,6 +15,25 @@ import 'package:hospital_system/shared/main_cubit/patient_cubit/patient_cubit.da
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //===============================
+  //firebase
+  //===============================
+  await Firebase.initializeApp();
+  await PushNotificationServicesApp.init(
+    fcmTokenUpdate: (fcm) {
+      // check user is login
+      // push to api
+    },
+    onNav: (type) {
+      // go to notification screen
+    },
+    onMessage: () {
+      // let user to know new message
+    },
+  );
+  //===============================
+  //firebase
+  //===============================
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
   token = CacheHelper.getData('token');
@@ -54,7 +75,7 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.grey.shade200,
           primarySwatch: primaryColor,
         ),
-        home: SplashScreen(who: who), //SplashScreen(who: who)
+        home: SplashScreen(who: who), // SplashScreen(who: who)
       ),
     );
   }
