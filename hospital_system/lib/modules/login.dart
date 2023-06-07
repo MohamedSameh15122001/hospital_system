@@ -139,7 +139,9 @@ class Login extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           state is LoadingMangerLogin ||
-                                  state is LoadingDoctorLogin
+                                  state is LoadingDoctorLogin ||
+                                  state is LoadingNurseLogin ||
+                                  state is LoadingPatientLogin
                               ? const Center(child: CircularProgressIndicator())
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(20),

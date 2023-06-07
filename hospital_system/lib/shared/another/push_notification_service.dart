@@ -158,8 +158,6 @@ class PushNotificationServicesApp {
   }
 }
 
-
-
 // await Firebase.initializeApp();
 //   FirebaseMessaging.instance.getToken().then((value) {
 //     if (kDebugMode) {
@@ -184,3 +182,67 @@ class PushNotificationServicesApp {
 //       print(message);
 //     }
 //   });
+//===================================================
+//===================================================
+//===================================================
+//===================================================
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter/material.dart';
+// import 'package:hospital_system/modules/nurse_modules/nurse_notifications.dart';
+// import 'package:hospital_system/shared/components/components.dart';
+
+// import '../components/constants.dart';
+
+// class FirebaseMessagingService {
+//   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+
+//   Future<void> initialize(GlobalKey<NavigatorState> navigatorKey) async {
+//     // Request permission for notifications (optional)
+//     await _firebaseMessaging.requestPermission(
+//       sound: true,
+//       badge: true,
+//       alert: true,
+//       announcement: false,
+//     );
+
+//     // Configure the onMessage, onBackgroundMessage, and onResume callbacks
+//     FirebaseMessaging.onMessage.listen(_onMessage);
+//     FirebaseMessaging.onBackgroundMessage((RemoteMessage message) async {
+//       await _onBackgroundMessage(message, navigatorKey);
+//     });
+//     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+//       await _onMessageOpenedApp(message, navigatorKey);
+//     });
+//     // Handle the initial notification if the app is launched from a terminated state
+//     final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+//     if (initialMessage != null) {
+//       await _handleInitialMessage(initialMessage, navigatorKey);
+//     }
+//   }
+
+//   Future<void> _onMessage(RemoteMessage message) async {
+//     // Handle foreground messages here
+//     showToast(text: 'new notification', state: ToastStates.SUCCESS);
+//   }
+
+//   Future<void> _onBackgroundMessage(
+//       RemoteMessage message, GlobalKey<NavigatorState> navigatorKey) async {
+//     // Handle background messages here
+//     await navigatorKey.currentState!
+//         .push(FadeRoute(const NurseNotifications()));
+//   }
+
+//   Future<void> _onMessageOpenedApp(
+//       RemoteMessage message, GlobalKey<NavigatorState> navigatorKey) async {
+//     // Handle notification when the app is in the background and opened from the notification
+//     await navigatorKey.currentState!
+//         .push(FadeRoute(const NurseNotifications()));
+//   }
+
+//   Future<void> _handleInitialMessage(
+//       RemoteMessage message, GlobalKey<NavigatorState> navigatorKey) async {
+//     // Handle the initial notification when the app is launched from a terminated state
+//     await navigatorKey.currentState!
+//         .push(FadeRoute(const NurseNotifications()));
+//   }
+// }

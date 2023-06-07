@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hospital_system/modules/doctor_modules/doctor_home.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 
@@ -66,6 +67,8 @@ class NoConnection extends StatelessWidget {
                                     context, const MangerHome());
                                 break;
                               case 'doctor':
+                                navigateAndFinishWithFade(
+                                    context, const DoctorHome());
                                 break;
                               case 'nurse':
                                 break;

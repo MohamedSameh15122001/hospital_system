@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hospital_system/models/manager_models/get_specific_medication_model.dart';
 import 'package:http/http.dart' as http;
@@ -29,6 +30,7 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   static ManagerCubit get(context) => BlocProvider.of(context);
 
+  // manger home page
   List<String> images = [
     'lib/assets/images/manger.png',
     'lib/assets/images/doctor.png',
@@ -45,6 +47,7 @@ class ManagerCubit extends Cubit<ManagerState> {
     'Medicines',
     'Passwords',
   ];
+  // manger home page
 
   // Change dropdownbutton
   List<String> items = ['male', 'female'];
@@ -631,8 +634,10 @@ class ManagerCubit extends Cubit<ManagerState> {
       {required String id, required String password, required context}) async {
     emit(LoadingNurseLogin());
 
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
     // Convert the request body to JSON
-    String jsonBody = jsonEncode({'Id': id, 'password': password});
+    String jsonBody =
+        jsonEncode({'Id': id, 'password': password, 'fcmToken': fcmToken});
 
     try {
       // Make the POST request
@@ -899,9 +904,10 @@ class ManagerCubit extends Cubit<ManagerState> {
   Future<void> patientLogin(
       {required String id, required String password, required context}) async {
     emit(LoadingPatientLogin());
-
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
     // Convert the request body to JSON
-    String jsonBody = jsonEncode({'Id': id, 'password': password});
+    String jsonBody =
+        jsonEncode({'Id': id, 'password': password, 'fcmToken': fcmToken});
 
     try {
       // Make the POST request
@@ -1164,9 +1170,10 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   // Get All Medications
   GetAllMedicationsModel? getAllMedicationsModel;
+  List med = [];
   Future<void> getAllMedications({required String token}) async {
     emit(LoadingGetAllMedications());
-
+    med = [];
     try {
       // Make the GET request
       final response = await http.get(
@@ -1180,6 +1187,10 @@ class ManagerCubit extends Cubit<ManagerState> {
         Map<String, dynamic> successResponse = jsonDecode(response.body);
         getAllMedicationsModel =
             GetAllMedicationsModel.fromJson(successResponse);
+        for (var element in getAllMedicationsModel!.result!) {
+          med.add(element.name);
+        }
+
         emit(SuccessGetAllMedications());
       } else {
         // Request failed

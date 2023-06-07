@@ -1,65 +1,171 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hospital_system/shared/components/components.dart';
+import 'package:http/http.dart' as http;
 
-class MyCustomTransition extends StatelessWidget {
-  const MyCustomTransition({super.key});
+class NurseAddTask extends StatefulWidget {
+  const NurseAddTask({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _NurseAddTaskState createState() => _NurseAddTaskState();
+}
+
+class _NurseAddTaskState extends State<NurseAddTask> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  final TextEditingController patientController = TextEditingController();
+  final TextEditingController scheduledTimeController = TextEditingController();
+  final TextEditingController nurseController = TextEditingController();
+  final TextEditingController doctorNotesController = TextEditingController();
+  final List<Map<String, String>> medications = [];
+
+  void handleAddMedication() {
+    setState(() {
+      medications.add({'medication': '', 'dose': ''});
+    });
+  }
+
+  void handleRemoveMedication(int index) {
+    setState(() {
+      medications.removeAt(index);
+    });
+  }
+
+  Future<void> handleSubmit() async {
+    if (formKey.currentState!.validate()) {
+      // Perform API call with the form data
+      Map<String, dynamic> formData = {
+        'patient': patientController.text,
+        'medications': medications,
+        'scheduledTime': scheduledTimeController.text,
+        'nurse': nurseController.text,
+        'doctorNotes': doctorNotesController.text,
+        'completed': false,
+      };
+
+      try {
+        final response = await http.post(
+          Uri.parse('your-api-url'),
+          body: formData,
+        );
+
+        if (response.statusCode == 200) {
+          if (kDebugMode) {
+            print('Task submitted successfully!');
+          }
+          // Perform any additional actions after successful submission
+        } else {
+          if (kDebugMode) {
+            print('Error submitting task. Status code: ${response.statusCode}');
+          }
+          // Handle error scenario if needed
+        }
+      } catch (error) {
+        if (kDebugMode) {
+          print('Error submitting task: $error');
+        }
+        // Handle error scenario if needed
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      appBar: AppBar(),
+      body: Form(
+        key: formKey,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            TextFormField(
+              controller: patientController,
+              decoration: const InputDecoration(labelText: 'Patient'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the patient name';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: scheduledTimeController,
+              decoration: const InputDecoration(labelText: 'Scheduled Time'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the scheduled time';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: nurseController,
+              decoration: const InputDecoration(labelText: 'Nurse'),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter the nurse name';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: doctorNotesController,
+              decoration: const InputDecoration(labelText: 'Doctor Notes'),
+            ),
+            Column(
+              children: medications.map((medication) {
+                int index = medications.indexOf(medication);
+                return Row(
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        decoration:
+                            const InputDecoration(labelText: 'Medication'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the medication';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            medications[index]['medication'] = value;
+                          });
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: TextFormField(
+                        decoration: const InputDecoration(labelText: 'Dose'),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter the dose';
+                          }
+                          return null;
+                        },
+                        onChanged: (value) {
+                          setState(() {
+                            medications[index]['dose'] = value;
+                          });
+                        },
+                      ),
+                    ),
+                    IconButton(
+                      icon: const Icon(Icons.remove),
+                      onPressed: () => handleRemoveMedication(index),
+                    ),
+                  ],
+                );
+              }).toList(),
+            ),
+            TextButton(
+              onPressed: handleAddMedication,
+              child: const Text('Add Medication'),
+            ),
             ElevatedButton(
-                onPressed: () =>
-                    Navigator.push(context, FadeRoute(const SecondPage())),
-                child: const Text('TAP TO VIEW FADE ANIMATION 1')),
-            ElevatedButton(
-              onPressed: () =>
-                  Navigator.push(context, FadeRoute2(const SecondPage())),
-              child: const Text('TAP TO VIEW FADE ANIMATION 2'),
+              onPressed: handleSubmit,
+              child: const Text('Submit'),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class FadeRoute2 extends PageRouteBuilder {
-  final Widget page;
-
-  FadeRoute2(this.page)
-      : super(
-          pageBuilder: (context, animation, anotherAnimation) => page,
-          transitionDuration: const Duration(milliseconds: 1000),
-          reverseTransitionDuration: const Duration(milliseconds: 200),
-          transitionsBuilder: (context, animation, anotherAnimation, child) {
-            animation = CurvedAnimation(
-                curve: Curves.fastLinearToSlowEaseIn,
-                parent: animation,
-                reverseCurve: Curves.fastOutSlowIn);
-            return FadeTransition(
-              opacity: animation,
-              child: page,
-            );
-          },
-        );
-}
-
-class SecondPage extends StatelessWidget {
-  const SecondPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Fade Transition'),
-        systemOverlayStyle: SystemUiOverlayStyle.light,
       ),
     );
   }

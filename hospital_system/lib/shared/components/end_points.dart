@@ -27,3 +27,7 @@ const String medications = '/medications';
 const String diagnoses = '/diagnoses';
 
 const String diagnosis = '/diagnosis';
+
+const String appointments = '/appointments';
+
+const String complated = '/complated';

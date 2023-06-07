@@ -7,7 +7,6 @@ import 'package:hospital_system/modules/manager_modules/manager_show_medication.
 import 'package:hospital_system/modules/manager_modules/manager_show_nurses.dart';
 import 'package:hospital_system/modules/manager_modules/manager_show_patients.dart';
 import 'package:hospital_system/modules/no_connection.dart';
-import 'package:hospital_system/shared/another/push_notification_service.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_states.dart';
@@ -20,18 +19,18 @@ class MangerHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    internetConection(context);
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.grey.shade200,
         statusBarIconBrightness: Brightness.dark,
       ),
     );
-    PushNotificationServicesApp.setupInteractMessage();
+
     return BlocConsumer<ManagerCubit, ManagerState>(
       bloc: ManagerCubit.get(context),
       listener: (context, state) {},
       builder: (context, state) {
+        internetConection(context);
         ManagerCubit cubit = ManagerCubit.get(context);
         return !isNetworkConnection
             ? const NoConnection(
