@@ -30,7 +30,7 @@ class MangerHome extends StatelessWidget {
       bloc: ManagerCubit.get(context),
       listener: (context, state) {},
       builder: (context, state) {
-        internetConection(context);
+        internetConection('manger', context);
         ManagerCubit cubit = ManagerCubit.get(context);
         return !isNetworkConnection
             ? const NoConnection(

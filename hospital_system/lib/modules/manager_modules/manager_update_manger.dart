@@ -26,7 +26,7 @@ class _MangerUpdateMangerState extends State<MangerUpdateManger> {
   @override
   void initState() {
     super.initState();
-
+    internetConection('manger', context);
     ManagerCubit cubit = ManagerCubit.get(context);
 
     cubit.getSpecificManger(token: token!, id: widget.id).then((value) {

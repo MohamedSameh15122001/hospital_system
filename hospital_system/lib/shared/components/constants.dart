@@ -4,15 +4,18 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hospital_system/modules/login.dart';
+import 'package:hospital_system/modules/no_connection.dart';
 import 'package:hospital_system/shared/another/cache_helper.dart';
 import 'package:hospital_system/shared/components/components.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:intl/intl.dart';
-import 'package:top_snackbar_flutter/custom_snack_bar.dart';
-import 'package:top_snackbar_flutter/top_snack_bar.dart';
 
+//
+List selectedMedicines = [];
+List<Map<String, String>> medicineToApi = [];
+//
 bool isNetworkConnection = true;
-Future<void> internetConection(context) async {
+Future<void> internetConection(who, context) async {
   try {
     final result = await InternetAddress.lookup('example.com');
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -20,15 +23,17 @@ Future<void> internetConection(context) async {
     }
   } on SocketException catch (_) {
     isNetworkConnection = false;
-    showSnackBar(context, 'Please Check Your Internet');
-    showTopSnackBar(
-      context,
-      const CustomSnackBar.success(
-        backgroundColor: Colors.red,
-        message: 'Please Check Your Internet',
-        // icon: Icon(null),
-      ),
-    );
+    // showSnackBar(navigatorKey.currentState!, 'Please Check Your Internet');
+    navigateAndFinishWithFade(context, NoConnection(who: who));
+
+    // showTopSnackBar(
+    //   context,
+    //   const CustomSnackBar.success(
+    //     backgroundColor: Colors.red,
+    //     message: 'Please Check Your Internet',
+    //     // icon: Icon(null),
+    //   ),
+    // );
   }
 }
 

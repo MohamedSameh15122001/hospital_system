@@ -18,6 +18,7 @@ class MangerShowMedicines extends StatelessWidget {
       bloc: ManagerCubit.get(context)..getAllMedications(token: token!),
       listener: (context, state) {},
       builder: (context, state) {
+        internetConection('manger', context);
         ManagerCubit cubit = ManagerCubit.get(context);
         return Scaffold(
           appBar: AppBar(

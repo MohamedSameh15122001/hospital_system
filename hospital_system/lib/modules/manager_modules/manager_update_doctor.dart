@@ -28,7 +28,7 @@ class _MangerUpdateDoctorState extends State<MangerUpdateDoctor> {
   @override
   void initState() {
     super.initState();
-
+    internetConection('manger', context);
     ManagerCubit cubit = ManagerCubit.get(context);
 
     cubit.getSpecificDoctor(token: token!, id: widget.id).then((value) {

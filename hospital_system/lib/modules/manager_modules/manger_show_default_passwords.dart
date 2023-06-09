@@ -7,6 +7,7 @@ class MangerShowDefaultPasswords extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    internetConection('manger', context);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,

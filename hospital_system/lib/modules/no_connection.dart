@@ -6,6 +6,7 @@ import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hospital_system/modules/doctor_modules/doctor_home.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
+import 'package:hospital_system/modules/nurse_modules/nurse_layout.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 
 import '../shared/main_cubit/manager_cubit/manager_cubit.dart';
@@ -59,7 +60,7 @@ class NoConnection extends StatelessWidget {
                       borderRadius: BorderRadius.circular(20),
                       child: MaterialButton(
                         onPressed: () async {
-                          await internetConection(context);
+                          await internetConection(who, context);
                           if (isNetworkConnection) {
                             switch (who) {
                               case 'manger':
@@ -71,6 +72,8 @@ class NoConnection extends StatelessWidget {
                                     context, const DoctorHome());
                                 break;
                               case 'nurse':
+                                navigateAndFinishWithFade(
+                                    context, const NurseLayout());
                                 break;
                               case 'patient':
                                 break;

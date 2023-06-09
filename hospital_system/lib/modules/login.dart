@@ -12,7 +12,6 @@ class Login extends StatelessWidget {
   final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    internetConection(context);
     return Scaffold(
       body: BlocConsumer<ManagerCubit, ManagerState>(
         bloc: ManagerCubit.get(context),

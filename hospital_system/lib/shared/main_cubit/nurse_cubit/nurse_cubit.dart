@@ -46,7 +46,7 @@ class NurseCubit extends Cubit<NurseState> {
 
   // Bottom Navigation Bar
   // seleted medicine
-  List selectedMedicines = [];
+
   // seleted medicine
 
   ErrorModel? errorModel;
@@ -91,7 +91,7 @@ class NurseCubit extends Cubit<NurseState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorAddAppointment());
     }
   }
@@ -126,7 +126,7 @@ class NurseCubit extends Cubit<NurseState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetAllPatientAppointment());
     }
   }
@@ -163,7 +163,7 @@ class NurseCubit extends Cubit<NurseState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetSpecificPatientAppointment());
     }
   }
@@ -174,6 +174,7 @@ class NurseCubit extends Cubit<NurseState> {
   Future<void> getCompletedAppointments({
     required String token,
   }) async {
+    getComplatedAppointmentsModel = null;
     emit(LoadingGetComplatedAppointments());
     try {
       // Make the GET request
@@ -194,12 +195,12 @@ class NurseCubit extends Cubit<NurseState> {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
-        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        // showToast(text: errorModel!.message!, state: ToastStates.WARNING);
         emit(ErrorGetComplatedAppointments());
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetComplatedAppointments());
     }
   }
@@ -233,7 +234,7 @@ class NurseCubit extends Cubit<NurseState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorCheckComplete());
     }
   }

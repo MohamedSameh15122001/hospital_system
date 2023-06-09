@@ -58,6 +58,7 @@ class _DoctorShowPatientInformationState
         ..getSpecificPatient(token: token!, id: widget.id),
       listener: (context, state) {},
       builder: (context, mangerState) {
+        internetConection('doctor', context);
         ManagerCubit mangerCubit = ManagerCubit.get(context);
 
         var specificPatientModel = mangerCubit.getSpecificPatientModel?.result;

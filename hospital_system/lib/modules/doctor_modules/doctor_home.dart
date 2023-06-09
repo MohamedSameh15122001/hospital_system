@@ -18,6 +18,7 @@ class DoctorHome extends StatelessWidget {
       bloc: ManagerCubit.get(context)..getAllPatients(token: token!),
       listener: (context, state) {},
       builder: (context, state) {
+        internetConection('doctor', context);
         ManagerCubit cubit = ManagerCubit.get(context);
         return Scaffold(
           appBar: AppBar(

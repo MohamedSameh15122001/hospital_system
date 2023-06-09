@@ -23,6 +23,7 @@ class DoctorAddDiagnosis extends StatelessWidget {
       bloc: DoctorCubit.get(context),
       listener: (context, state) {},
       builder: (context, state) {
+        internetConection('doctor', context);
         DoctorCubit cubit = DoctorCubit.get(context);
         return Scaffold(
           appBar: AppBar(

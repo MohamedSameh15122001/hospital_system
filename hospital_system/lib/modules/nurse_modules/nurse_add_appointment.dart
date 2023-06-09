@@ -14,10 +14,14 @@ import '../../shared/main_cubit/nurse_cubit/nurse_states.dart';
 class NurseAddAppointment extends StatefulWidget {
   const NurseAddAppointment({
     super.key,
+    this.patientId,
+    this.schedule,
   });
-  // final patientId;
-  // final schedule;
-  // final medicineToApi;
+  // ignore: prefer_typing_uninitialized_variables
+  final patientId;
+  // ignore: prefer_typing_uninitialized_variables
+  final schedule;
+
   @override
   State<NurseAddAppointment> createState() => _NurseAddAppointmentState();
 }
@@ -29,7 +33,18 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
 
   final TextEditingController scheduleController = TextEditingController();
 
-  List<Map<String, String>> medicineToApi = [];
+  @override
+  void initState() {
+    internetConection('nurse', context);
+    if (widget.patientId != null &&
+        widget.schedule != null &&
+        selectedMedicines.isNotEmpty &&
+        medicineToApi.isNotEmpty) {
+      idController.text = widget.patientId;
+      scheduleController.text = widget.schedule.toString();
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +106,9 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
                                       validator: (value) {
                                         if (value!.isEmpty) {
                                           return 'Please enter patient ID';
+                                        } else if (!RegExp(r'^Pt.{6}$')
+                                            .hasMatch(value)) {
+                                          return 'ID should start with "Pt" and have a total length of 8 characters';
                                         }
                                         // else if (!RegExp(r'^Pt.{6}$')
                                         //     .hasMatch(value)) {
@@ -140,15 +158,13 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
                                                 return CheckboxListTile(
                                                   title: Text(
                                                       managerCubit.med[index]),
-                                                  value: nurseCubit
-                                                      .selectedMedicines
+                                                  value: selectedMedicines
                                                       .contains(managerCubit
                                                           .med[index]),
                                                   onChanged: (value) {
                                                     if (value!) {
-                                                      nurseCubit
-                                                          .selectedMedicines
-                                                          .add(managerCubit
+                                                      selectedMedicines.add(
+                                                          managerCubit
                                                               .med[index]);
                                                       medicineToApi.add({
                                                         'medication':
@@ -160,9 +176,8 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
                                                                 .doses!
                                                       });
                                                     } else {
-                                                      nurseCubit
-                                                          .selectedMedicines
-                                                          .remove(managerCubit
+                                                      selectedMedicines.remove(
+                                                          managerCubit
                                                               .med[index]);
                                                       medicineToApi.remove({
                                                         'medication':

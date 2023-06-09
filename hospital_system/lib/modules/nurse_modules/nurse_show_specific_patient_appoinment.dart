@@ -24,6 +24,7 @@ class NurseShowSpecificPatientAppoinment extends StatelessWidget {
             token: token!, patientId: patientId, appointmentId: appointmentId),
       listener: (context, state) {},
       builder: (context, state) {
+        internetConection('nurse', context);
         NurseCubit cubit = NurseCubit.get(context);
         var model = cubit.getSpecificPatientAppointmentModel?.result;
         return Scaffold(

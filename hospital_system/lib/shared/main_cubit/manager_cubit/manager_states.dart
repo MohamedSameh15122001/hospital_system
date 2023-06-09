@@ -9,7 +9,7 @@ class ChangeDropDownButton extends ManagerState {}
 class ChangeRadio extends ManagerState {}
 
 // internet connection state
-// class InternetConnection extends ManagerState {}
+class NoInternetConnection extends ManagerState {}
 
 //======================================================================
 // Start Manger

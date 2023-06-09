@@ -112,7 +112,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorCreateMangerAccount());
     }
   }
@@ -156,7 +156,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorMangerLogin());
     }
   }
@@ -189,7 +189,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetAllMangers());
     }
   }
@@ -225,7 +225,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDeleteManger());
     }
   }
@@ -271,7 +271,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorUpdateMangerAccount());
     }
   }
@@ -306,7 +306,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetSpecificManger());
     }
   }
@@ -366,7 +366,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorCreateDoctorAccount());
     }
   }
@@ -410,7 +410,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDoctorLogin());
     }
   }
@@ -443,7 +443,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetAllDoctors());
     }
   }
@@ -479,7 +479,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDeleteDoctor());
     }
   }
@@ -526,7 +526,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorUpdateDoctorAccount());
     }
   }
@@ -561,7 +561,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetSpecificDoctor());
     }
   }
@@ -623,7 +623,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorCreateNurseAccount());
     }
   }
@@ -669,7 +669,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorNurseLogin());
     }
   }
@@ -702,7 +702,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetAllNurses());
     }
   }
@@ -738,7 +738,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDeleteNurse());
     }
   }
@@ -792,7 +792,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorUpdateNurseAccount());
     }
   }
@@ -826,7 +826,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetSpecificNurse());
     }
   }
@@ -894,7 +894,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorCreatePatientAccount());
     }
   }
@@ -939,7 +939,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorPatientLogin());
     }
   }
@@ -972,7 +972,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetAllPatients());
     }
   }
@@ -1008,7 +1008,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDeletePatient());
     }
   }
@@ -1066,7 +1066,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorUpdatePatientAccount());
     }
   }
@@ -1101,7 +1101,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetSpecificPatient());
     }
   }
@@ -1162,7 +1162,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorCreateMedication());
     }
   }
@@ -1201,7 +1201,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetAllMedications());
     }
   }
@@ -1237,7 +1237,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDeleteMedication());
     }
   }
@@ -1291,7 +1291,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorUpdateMedication());
     }
   }
@@ -1326,7 +1326,7 @@ class ManagerCubit extends Cubit<ManagerState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetSpecificMedication());
     }
   }

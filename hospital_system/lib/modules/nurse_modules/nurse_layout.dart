@@ -14,6 +14,7 @@ class NurseLayout extends StatelessWidget {
     return BlocConsumer<NurseCubit, NurseState>(
       listener: (context, state) {},
       builder: (context, state) {
+        internetConection('nurse', context);
         NurseCubit cubit = NurseCubit.get(context);
         return Scaffold(
           bottomNavigationBar: Container(

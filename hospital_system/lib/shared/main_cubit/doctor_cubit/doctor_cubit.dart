@@ -59,7 +59,7 @@ class DoctorCubit extends Cubit<DoctorState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorAddDiagnosis());
     }
   }
@@ -94,7 +94,7 @@ class DoctorCubit extends Cubit<DoctorState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorGetPatientWithHisDiagnosis());
     }
   }
@@ -139,7 +139,7 @@ class DoctorCubit extends Cubit<DoctorState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorUpdatePatientDiagnosis());
     }
   }
@@ -176,7 +176,7 @@ class DoctorCubit extends Cubit<DoctorState> {
       }
     } catch (e) {
       // An error occurred
-      showToast(text: 'error $e', state: ToastStates.ERROR);
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
       emit(ErrorDeletePatientDiagnosis());
     }
   }
