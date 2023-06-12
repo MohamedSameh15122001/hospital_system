@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hospital_system/models/nurse_models/get_nurse_profile_model.dart';
 import 'package:hospital_system/shared/main_cubit/nurse_cubit/nurse_states.dart';
 
 import '../../../models/error_model.dart';
@@ -43,11 +44,7 @@ class NurseCubit extends Cubit<NurseState> {
     HapticFeedback.lightImpact();
     emit(ChangeBottomNavBar());
   }
-
   // Bottom Navigation Bar
-  // seleted medicine
-
-  // seleted medicine
 
   ErrorModel? errorModel;
   SuccessModel? successModel;
@@ -239,4 +236,39 @@ class NurseCubit extends Cubit<NurseState> {
     }
   }
   // Check Complete
+
+  // get nurse profile
+  GetNurseProfileModel? getNurseProfileModel;
+  Future<void> getNurseProfile({
+    required String token,
+  }) async {
+    emit(LoadingGetNurseProfile());
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$nurses$profile'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        getNurseProfileModel = GetNurseProfileModel.fromJson(successResponse);
+
+        emit(SuccessGetNurseProfile());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorGetNurseProfile());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorGetNurseProfile());
+    }
+  }
+  // get nurse profile
 }

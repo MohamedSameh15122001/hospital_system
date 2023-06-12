@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:hospital_system/modules/no_connection.dart';
+import 'package:hospital_system/modules/nurse_modules/nurse_profile.dart';
 
 import '../../shared/another/push_notification_service.dart';
 import '../../shared/components/constants.dart';
@@ -49,7 +50,7 @@ class NurseHome extends StatelessWidget {
                 const Spacer(),
                 InkWell(
                   onTap: () async {
-                    await signOut(context);
+                    navigateToWithFade(context, const NurseProfile());
                   },
                   child: const CircleAvatar(
                     backgroundColor: Color(0x3850DEC9),

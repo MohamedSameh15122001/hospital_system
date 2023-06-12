@@ -33,4 +33,14 @@ class SuccessDeletePatientDiagnosis extends DoctorState {}
 
 class ErrorDeletePatientDiagnosis extends DoctorState {}
 // Delete Patient Diagnosis
+
+// get doctor profile
+class LoadingGetDoctorProfile extends DoctorState {}
+
+class SuccessGetDoctorProfile extends DoctorState {}
+
+class ErrorGetDoctorProfile extends DoctorState {}
+// get doctor profile
+
+
  

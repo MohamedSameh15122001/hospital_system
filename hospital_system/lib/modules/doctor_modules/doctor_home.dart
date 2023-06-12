@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:hospital_system/modules/doctor_modules/doctor_add_diagnosis.dart';
+import 'package:hospital_system/modules/doctor_modules/doctor_profile.dart';
 import 'package:hospital_system/modules/doctor_modules/doctor_show_patient_information.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 
@@ -47,7 +48,7 @@ class DoctorHome extends StatelessWidget {
                 const Spacer(),
                 InkWell(
                   onTap: () async {
-                    await signOut(context);
+                    navigateToWithFade(context, const DoctorProfile());
                   },
                   child: const CircleAvatar(
                     backgroundColor: Color(0x3850DEC9),

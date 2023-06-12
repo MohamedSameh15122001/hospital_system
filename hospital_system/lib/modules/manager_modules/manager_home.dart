@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:hospital_system/modules/manager_modules/manager_profile.dart';
 import 'package:hospital_system/modules/manager_modules/manager_show_doctors.dart';
 import 'package:hospital_system/modules/manager_modules/manager_show_medication.dart';
 import 'package:hospital_system/modules/manager_modules/manager_show_nurses.dart';
@@ -65,7 +66,8 @@ class MangerHome extends StatelessWidget {
                             const Spacer(),
                             InkWell(
                               onTap: () async {
-                                await signOut(context);
+                                navigateToWithFade(
+                                    context, const MangerProfile());
                               },
                               child: const CircleAvatar(
                                 backgroundColor: Color(0x3850DEC9),
@@ -129,14 +131,18 @@ class MangerHome extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.grey.shade300,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .shadow,
                                                 blurRadius: 10,
                                                 offset: const Offset(0, 4),
                                               )
                                             ],
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            color: Colors.white,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .onPrimaryContainer,
                                           ),
                                           child: Column(
                                             mainAxisAlignment:
@@ -155,8 +161,9 @@ class MangerHome extends StatelessWidget {
                                                 style: TextStyle(
                                                     fontSize: 22,
                                                     fontWeight: FontWeight.bold,
-                                                    color:
-                                                        Colors.grey.shade700),
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .surface),
                                               ),
                                             ],
                                           ),

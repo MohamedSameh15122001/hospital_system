@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:hospital_system/models/manager_models/get_manger_profile_model.dart';
 import 'package:hospital_system/models/manager_models/get_specific_medication_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,6 +68,42 @@ class ManagerCubit extends Cubit<ManagerState> {
   ErrorModel? errorModel;
   SuccessModel? successModel;
   LoginSuccessModel? loginSuccessModel;
+
+  // get manger profile
+  GetMangerProfileModel? getMangerProfileModel;
+  Future<void> getMangerProfile({
+    required String token,
+  }) async {
+    emit(LoadingGetMangerProfile());
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$mangers$profile'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        getMangerProfileModel = GetMangerProfileModel.fromJson(successResponse);
+
+        emit(SuccessGetMangerProfile());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorGetMangerProfile());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorGetMangerProfile());
+    }
+  }
+  // get manger profile
+
   //======================================================================
   // Start Manger
   //======================================================================

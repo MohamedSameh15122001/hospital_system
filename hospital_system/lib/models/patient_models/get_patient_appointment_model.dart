@@ -1,27 +1,31 @@
-class GetSpecificPatientAppointmentModel {
-  Result? result;
+class GetPatientAppointmentsModel {
+  List<Result>? result;
 
-  GetSpecificPatientAppointmentModel.fromJson(Map<String, dynamic> json) {
-    result = json['result'] != null ? Result.fromJson(json['result']) : null;
+  GetPatientAppointmentsModel.fromJson(Map<String, dynamic> json) {
+    if (json['result'] != null) {
+      result = <Result>[];
+      json['result'].forEach((v) {
+        result!.add(Result.fromJson(v));
+      });
+    }
   }
 }
 
 class Result {
   String? sId;
-  PatientOrNurse? patient;
+  Patient? patient;
   List<Medications>? medications;
-  dynamic schedule;
+  double? schedule;
   String? createdAt;
-  PatientOrNurse? nurse;
-  String? doctorNotes;
+  Patient? nurse;
+  void doctorNotes;
   bool? completed;
   int? iV;
 
   Result.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    patient = json['patient'] != null
-        ? PatientOrNurse.fromJson(json['patient'])
-        : null;
+    patient =
+        json['patient'] != null ? Patient.fromJson(json['patient']) : null;
     if (json['medications'] != null) {
       medications = <Medications>[];
       json['medications'].forEach((v) {
@@ -30,19 +34,18 @@ class Result {
     }
     schedule = json['schedule'];
     createdAt = json['createdAt'];
-    nurse =
-        json['nurse'] != null ? PatientOrNurse.fromJson(json['nurse']) : null;
+    nurse = json['nurse'] != null ? Patient.fromJson(json['nurse']) : null;
     doctorNotes = json['doctorNotes'];
     completed = json['completed'];
     iV = json['__v'];
   }
 }
 
-class PatientOrNurse {
+class Patient {
   String? name;
   String? id;
 
-  PatientOrNurse.fromJson(Map<String, dynamic> json) {
+  Patient.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     id = json['Id'];
   }

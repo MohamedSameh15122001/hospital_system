@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hospital_system/modules/doctor_modules/doctor_home.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
 import 'package:hospital_system/modules/nurse_modules/nurse_layout.dart';
+import 'package:hospital_system/modules/patient_modules/patient_layout.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 
 import '../shared/main_cubit/manager_cubit/manager_cubit.dart';
@@ -76,6 +77,8 @@ class NoConnection extends StatelessWidget {
                                     context, const NurseLayout());
                                 break;
                               case 'patient':
+                                navigateAndFinishWithFade(
+                                    context, const PatientLayout());
                                 break;
                               default:
                             }

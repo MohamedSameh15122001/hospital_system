@@ -31,3 +31,7 @@ const String diagnosis = '/diagnosis';
 const String appointments = '/appointments';
 
 const String complated = '/complated';
+
+const String profile = '/profile';
+
+const String appointmentes = '/appointmentes';

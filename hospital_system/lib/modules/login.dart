@@ -149,23 +149,27 @@ class Login extends StatelessWidget {
                                       if (formKey.currentState!.validate()) {
                                         if (cubit.who == "Manger") {
                                           await cubit.mangerLogin(
-                                              id: idController.text,
-                                              password: passwordController.text,
+                                              id: idController.text.trim(),
+                                              password: passwordController.text
+                                                  .trim(),
                                               context: context);
                                         } else if (cubit.who == "Doctor") {
                                           await cubit.doctorLogin(
-                                              id: idController.text,
-                                              password: passwordController.text,
+                                              id: idController.text.trim(),
+                                              password: passwordController.text
+                                                  .trim(),
                                               context: context);
                                         } else if (cubit.who == "Nurse") {
                                           await cubit.nurseLogin(
-                                              id: idController.text,
-                                              password: passwordController.text,
+                                              id: idController.text.trim(),
+                                              password: passwordController.text
+                                                  .trim(),
                                               context: context);
                                         } else if (cubit.who == "Patient") {
                                           await cubit.patientLogin(
-                                              id: idController.text,
-                                              password: passwordController.text,
+                                              id: idController.text.trim(),
+                                              password: passwordController.text
+                                                  .trim(),
                                               context: context);
                                         }
                                       }

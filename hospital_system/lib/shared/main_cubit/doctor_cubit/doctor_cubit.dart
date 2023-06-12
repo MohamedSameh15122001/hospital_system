@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hospital_system/models/doctor_models/get_doctor_profile_model.dart';
 import 'package:hospital_system/models/error_model.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:hospital_system/shared/main_cubit/doctor_cubit/doctor_states.dart';
@@ -181,4 +182,39 @@ class DoctorCubit extends Cubit<DoctorState> {
     }
   }
   // Delete Patient Diagnosis
+
+  // get doctor profile
+  GetDoctorProfileModel? getDoctorProfileModel;
+  Future<void> getDoctorProfile({
+    required String token,
+  }) async {
+    emit(LoadingGetDoctorProfile());
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$doctors$profile'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        getDoctorProfileModel = GetDoctorProfileModel.fromJson(successResponse);
+
+        emit(SuccessGetDoctorProfile());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorGetDoctorProfile());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorGetDoctorProfile());
+    }
+  }
+  // get doctor profile
 }

@@ -11,6 +11,14 @@ class ChangeRadio extends ManagerState {}
 // internet connection state
 class NoInternetConnection extends ManagerState {}
 
+// Create Manger Account
+class LoadingGetMangerProfile extends ManagerState {}
+
+class SuccessGetMangerProfile extends ManagerState {}
+
+class ErrorGetMangerProfile extends ManagerState {}
+// Create Manger Login
+
 //======================================================================
 // Start Manger
 //======================================================================

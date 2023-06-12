@@ -13,6 +13,7 @@ import 'package:hospital_system/shared/main_cubit/doctor_cubit/doctor_cubit.dart
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/nurse_cubit/nurse_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/patient_cubit/patient_cubit.dart';
+import 'package:hospital_system/shared/theme/light_theme.dart';
 
 import 'modules/nurse_modules/nurse_notifications.dart';
 
@@ -82,10 +83,12 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Hospital system',
-        theme: ThemeData(
-          scaffoldBackgroundColor: Colors.grey.shade200,
-          primarySwatch: primaryColor,
-        ),
+        theme: lightTheme,
+
+        // theme: ThemeData(
+        //   scaffoldBackgroundColor: Colors.grey.shade200,
+        //   primarySwatch: primaryColor,
+        // ),
         home: SplashScreen(who: who), // SplashScreen(who: who)
       ),
     );

@@ -119,7 +119,7 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
                                     ),
                                     const SizedBox(height: 16.0),
                                     TextFormField(
-                                      keyboardType: TextInputType.emailAddress,
+                                      keyboardType: TextInputType.number,
                                       controller: scheduleController,
                                       decoration: InputDecoration(
                                         labelText: 'Schedule',

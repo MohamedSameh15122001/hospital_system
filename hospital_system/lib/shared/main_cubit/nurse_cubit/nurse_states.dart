@@ -47,3 +47,11 @@ class SuccessCheckComplete extends NurseState {}
 
 class ErrorCheckComplete extends NurseState {}
 // Check Complete
+
+// get nurse profile
+class LoadingGetNurseProfile extends NurseState {}
+
+class SuccessGetNurseProfile extends NurseState {}
+
+class ErrorGetNurseProfile extends NurseState {}
+// get nurse profile
