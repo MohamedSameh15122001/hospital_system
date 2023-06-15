@@ -31,7 +31,8 @@ class DoctorShowSpecificPatientAppoinment extends StatelessWidget {
             title: const Text('Appointment details'),
             centerTitle: true,
           ),
-          body: state is LoadingGetSpecificPatientAppointment
+          body: state is LoadingGetSpecificPatientAppointment ||
+                  cubit.getSpecificPatientAppointmentModel!.result == null
               ? Center(child: loading)
               : state is ErrorGetSpecificPatientAppointment
                   ? Center(

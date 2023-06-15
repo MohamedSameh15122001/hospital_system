@@ -2,6 +2,9 @@ class ManagerState {}
 
 class ManagerInitial extends ManagerState {}
 
+// change switch
+class ChangeSwitch extends ManagerState {}
+
 // Change dropdownbutton state
 class ChangeDropDownButton extends ManagerState {}
 
@@ -384,3 +387,11 @@ class ErrorSetPatientPasswordDefault extends ManagerState {}
 //======================================================================
 // Set Password Default
 //======================================================================
+
+// get all Patients belong to doctor
+class LoadingGetAllPatientsBelongToDoctor extends ManagerState {}
+
+class SuccessGetAllPatientsBelongToDoctor extends ManagerState {}
+
+class ErrorGetAllPatientsBelongToDoctor extends ManagerState {}
+// get all Patients belong to doctor

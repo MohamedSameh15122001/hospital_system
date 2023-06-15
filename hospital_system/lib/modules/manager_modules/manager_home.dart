@@ -131,18 +131,14 @@ class MangerHome extends StatelessWidget {
                                           decoration: BoxDecoration(
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .shadow,
+                                                color: Colors.grey.shade300,
                                                 blurRadius: 10,
                                                 offset: const Offset(0, 4),
                                               )
                                             ],
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .onPrimaryContainer,
+                                            color: Colors.white,
                                           ),
                                           child: Column(
                                             mainAxisAlignment:
@@ -161,9 +157,8 @@ class MangerHome extends StatelessWidget {
                                                 style: TextStyle(
                                                     fontSize: 22,
                                                     fontWeight: FontWeight.bold,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .surface),
+                                                    color:
+                                                        Colors.grey.shade700),
                                               ),
                                             ],
                                           ),

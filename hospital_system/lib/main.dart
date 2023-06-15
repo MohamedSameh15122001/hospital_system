@@ -13,7 +13,6 @@ import 'package:hospital_system/shared/main_cubit/doctor_cubit/doctor_cubit.dart
 import 'package:hospital_system/shared/main_cubit/manager_cubit/manager_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/nurse_cubit/nurse_cubit.dart';
 import 'package:hospital_system/shared/main_cubit/patient_cubit/patient_cubit.dart';
-import 'package:hospital_system/shared/theme/light_theme.dart';
 
 import 'modules/nurse_modules/nurse_notifications.dart';
 
@@ -35,20 +34,6 @@ void main() async {
       showToast(text: 'new notification', state: ToastStates.SUCCESS);
     },
   );
-  // await PushNotificationServicesApp.init(
-  //   fcmTokenUpdate: (fcm) {
-  //     // check user is login
-  //     // push to api
-  //   },
-  //   onNav: (type) {
-  //     // go to notification screen
-  //     navigatorKey.currentState!.push(FadeRoute(const NurseNotifications()));
-  //   },
-  //   onMessage: () {
-  //     // let user to know new message
-  //     showToast(text: 'new notification', state: ToastStates.SUCCESS);
-  //   },
-  // );
   //===============================
   //firebase
   //===============================
@@ -90,13 +75,11 @@ class MyApp extends StatelessWidget {
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'Hospital system',
-        theme: lightTheme,
-
-        // theme: ThemeData(
-        //   scaffoldBackgroundColor: Colors.grey.shade200,
-        //   primarySwatch: primaryColor,
-        // ),
-        home: SplashScreen(who: who), // SplashScreen(who: who)
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.grey.shade200,
+          primarySwatch: primaryColor,
+        ),
+        home: SplashScreen(who: who),
       ),
     );
   }

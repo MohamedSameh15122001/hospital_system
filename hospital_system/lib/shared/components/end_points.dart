@@ -49,3 +49,5 @@ const String deleteAll = '/deleteAll';
 const String defaultPassword = '/defaultPassword';
 
 const String changePass = '/changePass';
+
+const String belongsDoctor = '/belongsDoctor';

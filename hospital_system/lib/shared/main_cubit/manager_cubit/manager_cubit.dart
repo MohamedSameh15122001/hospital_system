@@ -31,6 +31,16 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   static ManagerCubit get(context) => BlocProvider.of(context);
 
+  // change switch
+  bool switchValue = false;
+  Future<void> changeSwitch(bool newValue) async {
+    switchValue = newValue;
+    switchValue
+        ? await getAllPatients(token: token!)
+        : await getAllPatientsBelongToDoctor(token: token!);
+    emit(ChangeSwitch());
+  }
+
   // manger home page
   List<String> images = [
     'lib/assets/images/manger.png',
@@ -1742,4 +1752,38 @@ class ManagerCubit extends Cubit<ManagerState> {
   //======================================================================
   // Set Password Default
   //======================================================================
+
+  // get all Patients belong to doctor
+  GetAllPatientsModel? getAllPatientsBelongToDoctorModel;
+  Future<void> getAllPatientsBelongToDoctor({required String token}) async {
+    emit(LoadingGetAllPatientsBelongToDoctor());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$patients$belongsDoctor'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        getAllPatientsBelongToDoctorModel =
+            GetAllPatientsModel.fromJson(successResponse);
+        emit(SuccessGetAllPatientsBelongToDoctor());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorGetAllPatientsBelongToDoctor());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorGetAllPatientsBelongToDoctor());
+    }
+  }
+  // get all Patients belong to doctor
 }
