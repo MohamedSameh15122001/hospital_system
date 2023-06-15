@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:hospital_system/modules/no_connection.dart';
 import 'package:hospital_system/modules/nurse_modules/nurse_profile.dart';
+import 'package:hospital_system/modules/nurse_modules/nurse_search_patient.dart';
 
 import '../../shared/another/push_notification_service.dart';
 import '../../shared/components/constants.dart';
@@ -16,7 +16,8 @@ class NurseHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PushNotificationServicesApp.setupInteractMessage();
+    // PushNotificationServicesApp..setupInteractMessage();
+    PushNotificationsService.setupNotifications();
     return BlocConsumer<ManagerCubit, ManagerState>(
       bloc: ManagerCubit.get(context)..getAllPatients(token: token!),
       listener: (context, state) {},
@@ -49,6 +50,19 @@ class NurseHome extends StatelessWidget {
                 ),
                 const Spacer(),
                 InkWell(
+                  onTap: () {
+                    navigateToWithFade(context, NurseSearchPatient());
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: mainColor,
+                    child: const Icon(
+                      Icons.search,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                InkWell(
                   onTap: () async {
                     navigateToWithFade(context, const NurseProfile());
                   },
@@ -62,13 +76,13 @@ class NurseHome extends StatelessWidget {
             ),
             centerTitle: true,
           ),
-          body: !isNetworkConnection && State is NoInternetConnection
-              ? const NoConnection(
-                  who: 'nurse',
+          body: state is LoadingGetAllPatients
+              ? Center(
+                  child: loading,
                 )
-              : state is LoadingGetAllPatients
-                  ? const Center(
-                      child: CircularProgressIndicator(),
+              : state is ErrorGetAllPatients
+                  ? Center(
+                      child: Text(cubit.errorModel!.message!),
                     )
                   : cubit.getAllPatientsModel!.result!.isEmpty
                       ? const Center(

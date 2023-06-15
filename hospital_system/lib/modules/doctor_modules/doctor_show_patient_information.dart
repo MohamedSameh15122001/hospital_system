@@ -12,17 +12,17 @@ import '../../shared/main_cubit/manager_cubit/manager_cubit.dart';
 import '../../shared/main_cubit/manager_cubit/manager_states.dart';
 import 'doctor_show_specific_patient_appoinment.dart';
 
-class DoctorShowPatientInformation extends StatefulWidget {
-  const DoctorShowPatientInformation({super.key, required this.id});
+class DoctorShowPatientInformations extends StatefulWidget {
+  const DoctorShowPatientInformations({super.key, required this.id});
   final String id;
 
   @override
-  State<DoctorShowPatientInformation> createState() =>
-      _DoctorShowPatientInformationState();
+  State<DoctorShowPatientInformations> createState() =>
+      _DoctorShowPatientInformationsState();
 }
 
-class _DoctorShowPatientInformationState
-    extends State<DoctorShowPatientInformation>
+class _DoctorShowPatientInformationsState
+    extends State<DoctorShowPatientInformations>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final formKey = GlobalKey<FormState>();
@@ -78,6 +78,14 @@ class _DoctorShowPatientInformationState
                 NurseCubit nurseCubit = NurseCubit.get(context);
                 return Scaffold(
                   appBar: AppBar(
+                    leading: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        )),
                     elevation: 0,
                     // foregroundColor: Colors.white,
                     // backgroundColor: const Color(0x9300DEBD),
@@ -109,8 +117,12 @@ class _DoctorShowPatientInformationState
                       // tab (1) Patient Informations
                       //====================================================
                       mangerState is LoadingGetSpecificPatient
-                          ? const Center(child: CircularProgressIndicator())
-                          : patientInformations(mangerCubit),
+                          ? Center(child: loading)
+                          : mangerState is ErrorGetSpecificPatient
+                              ? Center(
+                                  child: Text(mangerCubit.errorModel!.message!),
+                                )
+                              : patientInformations(mangerCubit),
                       //====================================================
                       // end tab (1) Patient Informations
                       //====================================================
@@ -118,7 +130,7 @@ class _DoctorShowPatientInformationState
                       // tab (2) Diagnose
                       //===============================================================
                       doctorState is LoadingGetPatientWithHisDiagnosis
-                          ? const Center(child: CircularProgressIndicator())
+                          ? Center(child: loading)
                           : doctorState is ErrorGetPatientWithHisDiagnosis
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!))
@@ -131,14 +143,14 @@ class _DoctorShowPatientInformationState
                       //===============================================================
                       // ignore: avoid_unnecessary_containers
                       nurseState is LoadingGetAllPatientAppointment
-                          ? nurseState is ErrorGetAllPatientAppointment
+                          ? Center(
+                              child: loading,
+                            )
+                          : nurseState is ErrorGetAllPatientAppointment
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
                                 )
-                              : const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                          : tasks(nurseCubit, specificPatientModel),
+                              : tasks(nurseCubit, specificPatientModel),
                       //===============================================================
                       // end tab (3) Tasks
                       //===============================================================
@@ -281,229 +293,269 @@ class _DoctorShowPatientInformationState
             padding: const EdgeInsets.all(16.0),
             child: Form(
               key: formKey,
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: AnimationConfiguration.toStaggeredList(
-                    duration: const Duration(milliseconds: 500),
-                    childAnimationBuilder: (widget) => FlipAnimation(
-                      child: FadeInAnimation(
-                        child: widget,
-                      ),
-                    ),
-                    children: [
-                      doctorState is LoadingDeletePatientDiagnosis
-                          ? const Center(
-                              child: LinearProgressIndicator(
-                              color: Colors.teal,
-                            ))
-                          : Container(),
-                      Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Doctor:',
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 8),
-                              Text('Name: ${diagnoseModel!.doctor!.name}'),
-                              Text('ID: ${diagnoseModel.doctor!.id}'),
-                            ],
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(
+                    color: Colors.grey, // Change the color here
+                    width: 2.0, // Set the border width
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: const Duration(milliseconds: 500),
+                        childAnimationBuilder: (widget) => FlipAnimation(
+                          child: FadeInAnimation(
+                            child: widget,
                           ),
-                          const Spacer(),
-                          IconButton(
-                            onPressed: () async {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return AlertDialog(
-                                    title: const Text(
-                                      'are you sure to delete the diagnose!',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    actions: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: MaterialButton(
-                                              onPressed: () async {
-                                                Navigator.pop(context);
-                                                await doctorCubit
-                                                    .deletePatientDiagnosis(
-                                                  token: token!,
-                                                  id: widget.id,
-                                                );
-                                              },
-                                              color: mainColor,
-                                              height: 50,
-                                              child: const Text(
-                                                'Yes',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
+                        ),
+                        children: [
+                          doctorState is LoadingDeletePatientDiagnosis
+                              ? Center(
+                                  child: LinearProgressIndicator(
+                                  color: Colors.teal,
+                                  backgroundColor: mainColor,
+                                ))
+                              : Container(),
+                          Row(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'Doctor',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    '${diagnoseModel!.doctor!.name}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '${diagnoseModel.doctor!.id}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                  Text(
+                                    '${diagnoseModel.doctor!.specialty}',
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              IconButton(
+                                onPressed: () async {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return AlertDialog(
+                                        title: const Text(
+                                          'are you sure to delete the diagnose!',
+                                          style: TextStyle(
+                                            fontSize: 16,
                                           ),
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            child: MaterialButton(
-                                              onPressed: () {
-                                                Navigator.pop(context);
-                                              },
-                                              color: mainColor,
-                                              height: 50,
-                                              child: const Text(
-                                                'Cancel',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
+                                        ),
+                                        actions: [
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: MaterialButton(
+                                                  onPressed: () async {
+                                                    Navigator.pop(context);
+                                                    await doctorCubit
+                                                        .deletePatientDiagnosis(
+                                                      token: token!,
+                                                      id: widget.id,
+                                                    );
+                                                  },
+                                                  color: mainColor,
+                                                  height: 50,
+                                                  child: const Text(
+                                                    'Yes',
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
                                                 ),
                                               ),
-                                            ),
+                                              ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(20),
+                                                child: MaterialButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  color: mainColor,
+                                                  height: 50,
+                                                  child: const Text(
+                                                    'Cancel',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
+                                          const SizedBox(height: 20),
                                         ],
-                                      ),
-                                      const SizedBox(height: 20),
-                                    ],
+                                      );
+                                    },
                                   );
                                 },
-                              );
-                            },
-                            icon: Icon(
-                              Icons.delete,
-                              size: 30,
-                              color: Colors.red.shade400,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Patient:',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      Text('Name: ${diagnoseModel.patient!.name}'),
-                      Text('ID: ${diagnoseModel.patient!.name}'),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Prescription:',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      const SizedBox(
-                        width: 140,
-                        child: Divider(
-                          color: primaryColor,
-                          thickness: 4,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: prescriptionController,
-                        maxLines: 6,
-                        decoration: InputDecoration(
-                          labelText: 'Prescription',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: mainColor,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter prescription';
-                          } else if (value.length < 3) {
-                            return 'Prescription must be between min 3 characters';
-                          } else if (value.length > 1000) {
-                            return 'Prescription must be between max 1000 characters';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        'Diagnose:',
-                        style: TextStyle(
-                            fontSize: 22, fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 8),
-                      const SizedBox(
-                        width: 110,
-                        child: Divider(
-                          color: primaryColor,
-                          thickness: 4,
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      TextFormField(
-                        controller: diagnoseController,
-                        decoration: InputDecoration(
-                          labelText: 'Diagnosis',
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                              color: mainColor,
-                              width: 2.0,
-                            ),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                        ),
-                        maxLines: 6,
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter diagnose';
-                          } else if (value.length < 3) {
-                            return 'Diagnose must be between min 3 characters';
-                          } else if (value.length > 1000) {
-                            return 'Diagnose must be between max 1000 characters';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      doctorState is LoadingUpdatePatientDiagnosis
-                          ? const Center(child: CircularProgressIndicator())
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(20),
-                              child: MaterialButton(
-                                onPressed: () async {
-                                  if (formKey.currentState!.validate()) {
-                                    await doctorCubit.updatePatientDiagnosis(
-                                      prescription: prescriptionController.text,
-                                      diagnosis: diagnoseController.text,
-                                      id: widget.id,
-                                      token: token!,
-                                    );
-                                  }
-                                },
-                                color: mainColor,
-                                minWidth: mediaQuery(context).width,
-                                height: 50,
-                                child: const Text(
-                                  'UPDATE',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
+                                icon: Icon(
+                                  Icons.delete,
+                                  size: 30,
+                                  color: Colors.red.shade400,
                                 ),
                               ),
+                              Center(
+                                child: Image.asset(
+                                  'lib/assets/images/diagnose.png',
+                                  width: mediaQuery(context).width * .3,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          const Divider(
+                            height: 2,
+                            thickness: 3,
+                            color: Colors.grey,
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Name: ${diagnoseModel.patient!.name}'),
+                              Text(
+                                  'Date: ${formatDateToPrint(diagnoseModel.patient!.dateOfBirth)}'),
+                            ],
+                          ),
+                          Text('ID: ${diagnoseModel.patient!.id}'),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Prescription:',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          const SizedBox(
+                            width: 140,
+                            child: Divider(
+                              color: primaryColor,
+                              thickness: 4,
                             ),
-                    ],
-                  )),
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            controller: prescriptionController,
+                            maxLines: 6,
+                            decoration: InputDecoration(
+                              labelText: 'Prescription',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: mainColor,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter prescription';
+                              } else if (value.length < 3) {
+                                return 'Prescription must be between min 3 characters';
+                              } else if (value.length > 1000) {
+                                return 'Prescription must be between max 1000 characters';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Diagnose:',
+                            style: TextStyle(
+                                fontSize: 22, fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 8),
+                          const SizedBox(
+                            width: 110,
+                            child: Divider(
+                              color: primaryColor,
+                              thickness: 4,
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          TextFormField(
+                            controller: diagnoseController,
+                            decoration: InputDecoration(
+                              labelText: 'Diagnosis',
+                              border: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: mainColor,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                            ),
+                            maxLines: 6,
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter diagnose';
+                              } else if (value.length < 3) {
+                                return 'Diagnose must be between min 3 characters';
+                              } else if (value.length > 1000) {
+                                return 'Diagnose must be between max 1000 characters';
+                              }
+                              return null;
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          doctorState is LoadingUpdatePatientDiagnosis
+                              ? Center(child: loading)
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(20),
+                                  child: MaterialButton(
+                                    onPressed: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        await doctorCubit
+                                            .updatePatientDiagnosis(
+                                          prescription:
+                                              prescriptionController.text,
+                                          diagnosis: diagnoseController.text,
+                                          id: widget.id,
+                                          token: token!,
+                                        );
+                                      }
+                                    },
+                                    color: mainColor,
+                                    minWidth: mediaQuery(context).width,
+                                    height: 50,
+                                    child: const Text(
+                                      'UPDATE',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ),
+                        ],
+                      )),
+                ),
+              ),
             ),
           ),
         );
@@ -576,14 +628,36 @@ class _DoctorShowPatientInformationState
                               ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: allPatientAppointmentModel
-                                    .medications!.length,
+                                itemCount: (allPatientAppointmentModel
+                                            .medications!.length /
+                                        2)
+                                    .ceil(),
                                 itemBuilder: (context, index) {
-                                  return Text(allPatientAppointmentModel
-                                          .medications?[index]
-                                          .medication!
-                                          .name ??
-                                      '');
+                                  final startIndex = index * 2;
+                                  final endIndex = startIndex + 1;
+                                  final medications =
+                                      allPatientAppointmentModel.medications!;
+
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(medications[startIndex]
+                                                .medication!
+                                                .name ??
+                                            ''),
+                                      ),
+                                      const SizedBox(
+                                          width:
+                                              10), // Add spacing between medications
+                                      if (endIndex < medications.length)
+                                        Expanded(
+                                          child: Text(medications[endIndex]
+                                                  .medication!
+                                                  .name ??
+                                              ''),
+                                        ),
+                                    ],
+                                  );
                                 },
                               ),
                               const SizedBox(height: 8),
@@ -621,3 +695,13 @@ class _NameClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
+
+
+// const Text(
+//                                 'Doctor:',
+//                                 style: TextStyle(
+//                                     fontSize: 18, fontWeight: FontWeight.bold),
+//                               ),
+//                               const SizedBox(height: 8),
+//                               Text('Name: ${diagnoseModel!.doctor!.name}'),
+//                               Text('ID: ${diagnoseModel.doctor!.id}'),

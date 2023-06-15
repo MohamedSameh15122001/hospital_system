@@ -27,266 +27,319 @@ class NurseCompletedAppointments extends StatelessWidget {
             centerTitle: true,
           ),
           body: state is LoadingGetComplatedAppointments
-              ? const Center(child: CircularProgressIndicator())
-              : Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: AnimationLimiter(
-                    child: cubit.getComplatedAppointmentsModel?.result ==
-                                null &&
-                            state is SuccessGetComplatedAppointments
-                        ? Center(
-                            child: Text('${cubit.errorModel?.message!}!'),
-                          )
-                        : Column(
-                            children: [
-                              state is LoadingCheckComplete
-                                  ? const Center(
-                                      child: LinearProgressIndicator(
-                                      color: Colors.teal,
-                                    ))
-                                  : Container(),
-                              state is LoadingCheckComplete
-                                  ? const SizedBox(height: 20)
-                                  : Container(),
-                              Expanded(
-                                child: ListView.builder(
-                                  physics: const BouncingScrollPhysics(),
-                                  itemCount: cubit.getComplatedAppointmentsModel
-                                      ?.result?.length,
-                                  itemBuilder: (context, index) {
-                                    var model = cubit
-                                        .getComplatedAppointmentsModel
-                                        ?.result![index];
-                                    return AnimationConfiguration.staggeredList(
-                                      position: index,
-                                      delay: const Duration(milliseconds: 100),
-                                      child: SlideAnimation(
-                                        duration:
-                                            const Duration(milliseconds: 2500),
-                                        curve: Curves.fastLinearToSlowEaseIn,
-                                        horizontalOffset: 30, //-300
-                                        verticalOffset: 300, //-850
-                                        child: FlipAnimation(
-                                          duration: const Duration(
-                                              milliseconds: 3000),
-                                          curve: Curves.fastLinearToSlowEaseIn,
-                                          flipAxis: FlipAxis.y,
-                                          child: Container(
-                                            margin: const EdgeInsets.all(8),
-                                            decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color: Colors.grey.shade300,
-                                                  blurRadius: 10,
-                                                  offset: const Offset(0, 4),
-                                                )
-                                              ],
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                              color: Colors.white,
-                                            ),
-                                            child: ListTile(
-                                              leading: Image.asset(
-                                                  'lib/assets/images/appointment.png'),
-                                              title: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 12.0),
-                                                child: Text(
-                                                  model!.patient!.name!,
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  ),
+              ? Center(child: loading)
+              : state is ErrorGetComplatedAppointments
+                  ? Center(
+                      child: Text(cubit.errorModel!.message!),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: AnimationLimiter(
+                        child: cubit.getComplatedAppointmentsModel?.result ==
+                                    null &&
+                                state is SuccessGetComplatedAppointments
+                            ? Center(
+                                child: Text('${cubit.errorModel?.message!}!'),
+                              )
+                            : Column(
+                                children: [
+                                  state is LoadingCheckComplete
+                                      ? Center(
+                                          child: LinearProgressIndicator(
+                                          color: Colors.teal,
+                                          backgroundColor: mainColor,
+                                        ))
+                                      : Container(),
+                                  state is LoadingCheckComplete
+                                      ? const SizedBox(height: 20)
+                                      : Container(),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount: cubit
+                                          .getComplatedAppointmentsModel
+                                          ?.result
+                                          ?.length,
+                                      itemBuilder: (context, index) {
+                                        var model = cubit
+                                            .getComplatedAppointmentsModel
+                                            ?.result![index];
+                                        return AnimationConfiguration
+                                            .staggeredList(
+                                          position: index,
+                                          delay:
+                                              const Duration(milliseconds: 100),
+                                          child: SlideAnimation(
+                                            duration: const Duration(
+                                                milliseconds: 2500),
+                                            curve:
+                                                Curves.fastLinearToSlowEaseIn,
+                                            horizontalOffset: 30, //-300
+                                            verticalOffset: 300, //-850
+                                            child: FlipAnimation(
+                                              duration: const Duration(
+                                                  milliseconds: 3000),
+                                              curve:
+                                                  Curves.fastLinearToSlowEaseIn,
+                                              flipAxis: FlipAxis.y,
+                                              child: Container(
+                                                margin: const EdgeInsets.all(8),
+                                                decoration: BoxDecoration(
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      color:
+                                                          Colors.grey.shade300,
+                                                      blurRadius: 10,
+                                                      offset:
+                                                          const Offset(0, 4),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(20),
+                                                  color: Colors.white,
                                                 ),
-                                              ),
-                                              subtitle: Column(
-                                                // mainAxisAlignment:
-                                                //     MainAxisAlignment.spaceBetween,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  const SizedBox(height: 8),
-                                                  Text(
-                                                      'ID: ${model.patient!.id!}'),
-                                                  const SizedBox(height: 8),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                          Icons.calendar_month),
-                                                      Text(
-                                                          ' ${formatDateToPrint(model.createdAt!)}'),
-                                                    ],
-                                                  ),
-                                                  const SizedBox(height: 8),
-                                                  Row(
-                                                    children: [
-                                                      const Icon(
-                                                          Icons.schedule),
-                                                      Text(
-                                                          ' ${model.schedule}'),
-                                                    ],
-                                                  ),
-                                                  const Divider(),
-                                                  // const SizedBox(height: 8),
-                                                  const Text('medicines:'),
-                                                  const SizedBox(height: 8),
-                                                  ListView.builder(
-                                                    physics:
-                                                        const NeverScrollableScrollPhysics(),
-                                                    shrinkWrap: true,
-                                                    itemCount: model
-                                                        .medications!.length,
-                                                    itemBuilder:
-                                                        (context, index) {
-                                                      return Row(
-                                                        children: [
-                                                          Icon(
-                                                            Icons.circle,
-                                                            color: mainColor,
-                                                          ),
-                                                          Text(
-                                                              '  ${model.medications?[index].medication!.name}'),
-                                                        ],
-                                                      );
-                                                    },
-                                                  ),
-                                                  const SizedBox(height: 8),
-                                                  ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: MaterialButton(
-                                                      onPressed: () async {
-                                                        showDialog(
-                                                          context: context,
-                                                          builder:
-                                                              (dialogContext) {
-                                                            return AlertDialog(
-                                                              title: const Text(
-                                                                'are you sure the task is finished?',
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 16,
-                                                                ),
-                                                              ),
-                                                              actions: [
-                                                                Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceEvenly,
-                                                                  children: [
-                                                                    ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                      child:
-                                                                          MaterialButton(
-                                                                        onPressed:
-                                                                            () async {
-                                                                          Navigator.pop(
-                                                                              dialogContext);
-                                                                          await cubit.checkComplete(
-                                                                              token: token!,
-                                                                              appointmentId: model.sId!);
-                                                                          for (var i = 0;
-                                                                              i < model.medications!.length;
-                                                                              i++) {
-                                                                            selectedMedicines.add(model.medications![i].medication!.name);
-                                                                            medicineToApi.add({
-                                                                              'medication': model.medications![i].medication!.sId!,
-                                                                              'dose': model.medications![i].dose!,
-                                                                            });
-                                                                          }
-
-                                                                          // ignore: use_build_context_synchronously
-                                                                          navigateToWithFade(
-                                                                              context,
-                                                                              NurseAddAppointment(
-                                                                                patientId: model.patient!.id,
-                                                                                schedule: model.schedule,
-                                                                              ));
-                                                                        },
-                                                                        color:
-                                                                            mainColor,
-                                                                        height:
-                                                                            50,
-                                                                        child:
-                                                                            const Text(
-                                                                          'Yes',
-                                                                          style: TextStyle(
-                                                                              color: Colors.white,
-                                                                              fontWeight: FontWeight.bold),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                    ClipRRect(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
-                                                                      child:
-                                                                          MaterialButton(
-                                                                        onPressed:
-                                                                            () {
-                                                                          Navigator.pop(
-                                                                              dialogContext);
-                                                                        },
-                                                                        color:
-                                                                            mainColor,
-                                                                        height:
-                                                                            50,
-                                                                        child:
-                                                                            const Text(
-                                                                          'Cancel',
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                                const SizedBox(
-                                                                    height: 20),
-                                                              ],
-                                                            );
-                                                          },
-                                                        );
-                                                      },
-                                                      color: mainColor,
-                                                      minWidth:
-                                                          mediaQuery(context)
-                                                              .width,
-                                                      height: 50,
-                                                      child: const Text(
-                                                        'COMPELETE',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
+                                                child: ListTile(
+                                                  leading: Image.asset(
+                                                      'lib/assets/images/appointment.png'),
+                                                  title: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 12.0),
+                                                    child: Text(
+                                                      model!.patient!.name!,
+                                                      style: const TextStyle(
+                                                        fontSize: 20,
                                                       ),
                                                     ),
                                                   ),
-                                                  const SizedBox(height: 10),
-                                                ],
+                                                  subtitle: Column(
+                                                    // mainAxisAlignment:
+                                                    //     MainAxisAlignment.spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      const SizedBox(height: 8),
+                                                      Text(
+                                                          'ID: ${model.patient!.id!}'),
+                                                      const SizedBox(height: 8),
+                                                      Row(
+                                                        children: [
+                                                          const Icon(Icons
+                                                              .calendar_month),
+                                                          Text(
+                                                              ' ${formatDateToPrint(model.createdAt!)}'),
+                                                        ],
+                                                      ),
+                                                      const SizedBox(height: 8),
+                                                      Row(
+                                                        children: [
+                                                          const Icon(
+                                                              Icons.schedule),
+                                                          Text(
+                                                              ' ${model.schedule}'),
+                                                        ],
+                                                      ),
+                                                      const Divider(),
+                                                      // const SizedBox(height: 8),
+                                                      const Text('medicines:'),
+                                                      const SizedBox(height: 8),
+                                                      ListView.builder(
+                                                        physics:
+                                                            const NeverScrollableScrollPhysics(),
+                                                        shrinkWrap: true,
+                                                        itemCount: (model
+                                                                    .medications!
+                                                                    .length /
+                                                                2)
+                                                            .ceil(),
+                                                        itemBuilder:
+                                                            (context, index) {
+                                                          final startIndex =
+                                                              index * 2;
+                                                          final endIndex =
+                                                              startIndex + 1;
+                                                          final medications =
+                                                              model
+                                                                  .medications!;
+
+                                                          return Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: Text(medications[
+                                                                            startIndex]
+                                                                        .medication!
+                                                                        .name ??
+                                                                    ''),
+                                                              ),
+                                                              const SizedBox(
+                                                                  width:
+                                                                      10), // Add spacing between medications
+                                                              if (endIndex <
+                                                                  medications
+                                                                      .length)
+                                                                Expanded(
+                                                                  child: Text(medications[
+                                                                              endIndex]
+                                                                          .medication!
+                                                                          .name ??
+                                                                      ''),
+                                                                ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      ),
+                                                      const SizedBox(height: 8),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        child: MaterialButton(
+                                                          onPressed: () async {
+                                                            showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (dialogContext) {
+                                                                return AlertDialog(
+                                                                  title:
+                                                                      const Text(
+                                                                    'are you sure the task is finished?',
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          16,
+                                                                    ),
+                                                                  ),
+                                                                  actions: [
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .spaceEvenly,
+                                                                      children: [
+                                                                        ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(20),
+                                                                          child:
+                                                                              MaterialButton(
+                                                                            onPressed:
+                                                                                () async {
+                                                                              Navigator.pop(dialogContext);
+                                                                              await cubit.checkComplete(token: token!, appointmentId: model.sId!);
+                                                                              for (var i = 0; i < model.medications!.length; i++) {
+                                                                                selectedMedicines.add(model.medications![i].medication!.name);
+                                                                                medicineToApi.add({
+                                                                                  'medication': model.medications![i].medication!.sId!,
+                                                                                  'dose': model.medications![i].dose!,
+                                                                                });
+                                                                              }
+
+                                                                              // ignore: use_build_context_synchronously
+                                                                              navigateToWithFade(
+                                                                                  context,
+                                                                                  NurseAddAppointment(
+                                                                                    patientId: model.patient!.id,
+                                                                                    schedule: model.schedule,
+                                                                                  ));
+                                                                            },
+                                                                            color:
+                                                                                mainColor,
+                                                                            height:
+                                                                                50,
+                                                                            child:
+                                                                                const Text(
+                                                                              'Yes',
+                                                                              style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        ClipRRect(
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(20),
+                                                                          child:
+                                                                              MaterialButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(dialogContext);
+                                                                            },
+                                                                            color:
+                                                                                mainColor,
+                                                                            height:
+                                                                                50,
+                                                                            child:
+                                                                                const Text(
+                                                                              'Cancel',
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height:
+                                                                            20),
+                                                                  ],
+                                                                );
+                                                              },
+                                                            );
+                                                          },
+                                                          color: mainColor,
+                                                          minWidth: mediaQuery(
+                                                                  context)
+                                                              .width,
+                                                          height: 50,
+                                                          child: const Text(
+                                                            'COMPELETE',
+                                                            style: TextStyle(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10),
+                                                    ],
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                  ),
-                ),
+                      ),
+                    ),
         );
       },
     );
   }
 }
+
+// ListView.builder(
+//                                                     physics:
+//                                                         const NeverScrollableScrollPhysics(),
+//                                                     shrinkWrap: true,
+//                                                     itemCount: model
+//                                                         .medications!.length,
+//                                                     itemBuilder:
+//                                                         (context, index) {
+//                                                       return Row(
+//                                                         children: [
+//                                                           Icon(
+//                                                             Icons.circle,
+//                                                             color: mainColor,
+//                                                           ),
+//                                                           Text(
+//                                                               '  ${model.medications?[index].medication!.name}'),
+//                                                         ],
+//                                                       );
+//                                                     },
+//                                                   ),

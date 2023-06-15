@@ -83,6 +83,14 @@ class _NurseShowPatientInformationsState
 
                 return Scaffold(
                   appBar: AppBar(
+                    leading: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: const Icon(
+                          Icons.arrow_back,
+                          color: Colors.white,
+                        )),
                     elevation: 0,
                     // foregroundColor: Colors.white,
                     // backgroundColor: const Color(0x9300DEBD),
@@ -114,8 +122,12 @@ class _NurseShowPatientInformationsState
                       // tab (1) Patient Informations
                       //====================================================
                       mangerState is LoadingGetSpecificPatient
-                          ? const Center(child: CircularProgressIndicator())
-                          : patientInformations(specificPatientModel),
+                          ? Center(child: loading)
+                          : mangerState is ErrorGetSpecificPatient
+                              ? Center(
+                                  child: Text(mangerCubit.errorModel!.message!),
+                                )
+                              : patientInformations(specificPatientModel),
                       //====================================================
                       // end tab (1) Patient Informations
                       //====================================================
@@ -123,7 +135,7 @@ class _NurseShowPatientInformationsState
                       // tab (2) Diagnose
                       //===============================================================
                       doctorState is LoadingGetPatientWithHisDiagnosis
-                          ? const Center(child: CircularProgressIndicator())
+                          ? Center(child: loading)
                           : doctorState is ErrorGetPatientWithHisDiagnosis
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
@@ -141,8 +153,8 @@ class _NurseShowPatientInformationsState
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
                                 )
-                              : const Center(
-                                  child: CircularProgressIndicator(),
+                              : Center(
+                                  child: loading,
                                 )
                           : tasks(nurseCubit, specificPatientModel),
                       //===============================================================
@@ -280,78 +292,121 @@ class _NurseShowPatientInformationsState
         physics: const BouncingScrollPhysics(),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: AnimationConfiguration.toStaggeredList(
-                duration: const Duration(milliseconds: 500),
-                childAnimationBuilder: (widget) => FlipAnimation(
-                  child: FadeInAnimation(
-                    child: widget,
-                  ),
-                ),
-                children: [
-                  Center(
-                    child: Image.asset(
-                      'lib/assets/images/diagnose.png',
-                      width: mediaQuery(context).width * .4,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: Colors.grey, // Change the color here
+                width: 2.0, // Set the border width
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: AnimationConfiguration.toStaggeredList(
+                    duration: const Duration(milliseconds: 500),
+                    childAnimationBuilder: (widget) => FlipAnimation(
+                      child: FadeInAnimation(
+                        child: widget,
+                      ),
                     ),
-                  ),
-                  const Text(
-                    'Doctor:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text('Name: ${diagnoseModel!.doctor!.name}'),
-                  Text('ID: ${diagnoseModel.doctor!.id}'),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Patient:',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  Text('Name: ${diagnoseModel.patient!.name}'),
-                  Text('ID: ${diagnoseModel.patient!.name}'),
-                  const SizedBox(height: 16),
-                  const Text(
-                    'Prescription:',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  const SizedBox(
-                    width: 140,
-                    child: Divider(
-                      color: primaryColor,
-                      thickness: 4,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    '${diagnoseModel.prescription}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(height: 16),
-                  const Divider(),
-                  const Text(
-                    'Diagnose:',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 8),
-                  const SizedBox(
-                    width: 110,
-                    child: Divider(
-                      color: primaryColor,
-                      thickness: 4,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    '${diagnoseModel.diagnosis}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                  const SizedBox(height: 20),
-                ],
-              )),
+                    children: [
+                      Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Doctor',
+                                style: TextStyle(
+                                    fontSize: 20, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 8),
+                              Text(
+                                '${diagnoseModel!.doctor!.name}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                '${diagnoseModel.doctor!.id}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              Text(
+                                '${diagnoseModel.doctor!.specialty}',
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          Center(
+                            child: Image.asset(
+                              'lib/assets/images/diagnose.png',
+                              width: mediaQuery(context).width * .3,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      const Divider(
+                        height: 2,
+                        thickness: 3,
+                        color: Colors.grey,
+                      ),
+                      const SizedBox(height: 16),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text('Name: ${diagnoseModel.patient!.name}'),
+                          Text(
+                              'Date: ${formatDateToPrint(diagnoseModel.patient!.dateOfBirth)}'),
+                        ],
+                      ),
+                      Text('ID: ${diagnoseModel.patient!.id}'),
+                      const SizedBox(height: 16),
+                      const Text(
+                        'Prescription:',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      const SizedBox(
+                        width: 140,
+                        child: Divider(
+                          color: primaryColor,
+                          thickness: 4,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        '${diagnoseModel.prescription}',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      const SizedBox(height: 16),
+                      const Divider(),
+                      const Text(
+                        'Diagnose:',
+                        style: TextStyle(
+                            fontSize: 22, fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 8),
+                      const SizedBox(
+                        width: 110,
+                        child: Divider(
+                          color: primaryColor,
+                          thickness: 4,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Text(
+                        '${diagnoseModel.diagnosis}',
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                      const SizedBox(height: 20),
+                    ],
+                  )),
+            ),
+          ),
         ),
       );
 
@@ -422,14 +477,36 @@ class _NurseShowPatientInformationsState
                               ListView.builder(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: allPatientAppointmentModel
-                                    .medications!.length,
+                                itemCount: (allPatientAppointmentModel
+                                            .medications!.length /
+                                        2)
+                                    .ceil(),
                                 itemBuilder: (context, index) {
-                                  return Text(allPatientAppointmentModel
-                                          .medications?[index]
-                                          .medication!
-                                          .name ??
-                                      '');
+                                  final startIndex = index * 2;
+                                  final endIndex = startIndex + 1;
+                                  final medications =
+                                      allPatientAppointmentModel.medications!;
+
+                                  return Row(
+                                    children: [
+                                      Expanded(
+                                        child: Text(medications[startIndex]
+                                                .medication!
+                                                .name ??
+                                            ''),
+                                      ),
+                                      const SizedBox(
+                                          width:
+                                              10), // Add spacing between medications
+                                      if (endIndex < medications.length)
+                                        Expanded(
+                                          child: Text(medications[endIndex]
+                                                  .medication!
+                                                  .name ??
+                                              ''),
+                                        ),
+                                    ],
+                                  );
                                 },
                               ),
                               const SizedBox(height: 8),
@@ -466,3 +543,17 @@ class _NameClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => true;
 }
+
+// ListView.builder(
+//                                 physics: const NeverScrollableScrollPhysics(),
+//                                 shrinkWrap: true,
+//                                 itemCount: allPatientAppointmentModel
+//                                     .medications!.length,
+//                                 itemBuilder: (context, index) {
+//                                   return Text(allPatientAppointmentModel
+//                                           .medications?[index]
+//                                           .medication!
+//                                           .name ??
+//                                       '');
+//                                 },
+//                               ),

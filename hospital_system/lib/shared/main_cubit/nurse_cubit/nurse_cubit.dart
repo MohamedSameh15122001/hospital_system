@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hospital_system/models/nurse_models/get_all_nurse_notifications_model.dart';
 import 'package:hospital_system/models/nurse_models/get_nurse_profile_model.dart';
 import 'package:hospital_system/shared/main_cubit/nurse_cubit/nurse_states.dart';
 
@@ -271,4 +272,208 @@ class NurseCubit extends Cubit<NurseState> {
     }
   }
   // get nurse profile
+
+  //=====================================
+  // nurse notifications
+  //=====================================
+
+  // get all nurse notifications
+  GetAllNurseNotificationsModel? getAllNurseNotificationsModel;
+  Future<void> getAllNurseNotifications({
+    required String token,
+  }) async {
+    getAllNurseNotificationsModel = null;
+    emit(LoadingGetAllNurseNotifications());
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$notifications$nurse'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        getAllNurseNotificationsModel =
+            GetAllNurseNotificationsModel.fromJson(successResponse);
+
+        emit(SuccessGetAllNurseNotifications());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        // showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorGetAllNurseNotifications());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorGetAllNurseNotifications());
+    }
+  }
+  // get all nurse notifications
+
+  // delete specific nurse notification
+  Future<void> deleteSpecificNurseNotification(
+      {required String token, required String id}) async {
+    emit(LoadingDeleteSpecificNurseNotification());
+
+    try {
+      // Make the DELETE request
+      final response = await http.delete(
+        Uri.parse('$url$notifications$nurse$delete/$id'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+
+        await getAllNurseNotifications(token: token);
+        emit(SuccessDeleteSpecificNurseNotification());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorDeleteSpecificNurseNotification());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorDeleteSpecificNurseNotification());
+    }
+  }
+  // delete specific nurse notification
+
+  // delete all nurse notifications
+  Future<void> deleteAllNurseNotifications({required String token}) async {
+    emit(LoadingDeleteAllNurseNotifications());
+
+    try {
+      // Make the DELETE request
+      final response = await http.delete(
+        Uri.parse('$url$notifications$nurse$deleteAll'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+
+        await getAllNurseNotifications(token: token);
+        emit(SuccessDeleteAllNurseNotifications());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorDeleteAllNurseNotifications());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorDeleteAllNurseNotifications());
+    }
+  }
+  // delete all nurse notifications
+
+  //=====================================
+  // nurse notifications
+  //=====================================
+
+  // Change Nurse Password
+  Future<void> changeNursePassword({
+    required String oldPassword,
+    required String newPassword,
+    required String token,
+    required context,
+  }) async {
+    emit(LoadingChangeNursePassword());
+
+    // Convert the request body to JSON
+    String jsonBody =
+        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
+
+    try {
+      // Make the POST request
+      final response = await http.post(
+        Uri.parse('$url$nurses$profile$changePass'),
+        headers: {contentType: applicationJson, 'token': token},
+        body: jsonBody,
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        await signOut(context);
+        emit(SuccessChangeNursePassword());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorChangeNursePassword());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorChangeNursePassword());
+    }
+  }
+  // Change Nurse Password
+
+  // Doctor Add Notes
+  Future<void> doctorAddNotes(
+      {required String doctorNotes,
+      required String id,
+      required String token,
+      required context
+      // required context,
+      }) async {
+    emit(LoadingDoctorAddNotes());
+
+    // Convert the request body to JSON
+    String jsonBody = jsonEncode({'doctorNotes': doctorNotes});
+
+    try {
+      // Make the PUT request
+      final response = await http.put(
+        Uri.parse('$url$appointments/$id'),
+        headers: {contentType: applicationJson, 'token': token},
+        body: jsonBody,
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        Navigator.pop(context);
+        emit(SuccessDoctorAddNotes());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorDoctorAddNotes());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorDoctorAddNotes());
+    }
+  }
+  // Doctor Add Notes
 }

@@ -15,7 +15,7 @@ class Result {
   String? sId;
   Patient? patient;
   List<Medications>? medications;
-  double? schedule;
+  dynamic schedule;
   String? createdAt;
   Patient? nurse;
   void doctorNotes;
@@ -35,6 +35,7 @@ class Result {
     schedule = json['schedule'];
     createdAt = json['createdAt'];
     nurse = json['nurse'] != null ? Patient.fromJson(json['nurse']) : null;
+    // ignore: void_checks
     doctorNotes = json['doctorNotes'];
     completed = json['completed'];
     iV = json['__v'];

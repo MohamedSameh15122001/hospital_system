@@ -42,5 +42,15 @@ class SuccessGetDoctorProfile extends DoctorState {}
 class ErrorGetDoctorProfile extends DoctorState {}
 // get doctor profile
 
+// Change Doctor Password
+class LoadingChangeDoctorPassword extends DoctorState {}
+
+class SuccessChangeDoctorPassword extends DoctorState {}
+
+class ErrorChangeDoctorPassword extends DoctorState {}
+// Change Doctor Password
+
+
+
 
  

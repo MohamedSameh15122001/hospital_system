@@ -11,6 +11,14 @@ class ChangeRadio extends ManagerState {}
 // internet connection state
 class NoInternetConnection extends ManagerState {}
 
+// Change Manger Password
+class LoadingChangeMangerPassword extends ManagerState {}
+
+class SuccessChangeMangerPassword extends ManagerState {}
+
+class ErrorChangeMangerPassword extends ManagerState {}
+// Change Manger Password
+
 // Create Manger Account
 class LoadingGetMangerProfile extends ManagerState {}
 
@@ -289,4 +297,90 @@ class ErrorGetSpecificMedication extends ManagerState {}
 
 //======================================================================
 // End Medication
+//======================================================================
+
+//======================================================================
+// Search
+//======================================================================
+// Search Mangers
+class LoadingSearchMangers extends ManagerState {}
+
+class SuccessSearchMangers extends ManagerState {}
+
+class ErrorSearchMangers extends ManagerState {}
+
+// Search Mangers
+// Search Doctors
+class LoadingSearchDoctors extends ManagerState {}
+
+class SuccessSearchDoctors extends ManagerState {}
+
+class ErrorSearchDoctors extends ManagerState {}
+
+// Search Doctors
+// Search Nurses
+class LoadingSearchNurses extends ManagerState {}
+
+class SuccessSearchNurses extends ManagerState {}
+
+class ErrorSearchNurses extends ManagerState {}
+// Search Nurses
+
+// Search Patients
+class LoadingSearchPatients extends ManagerState {}
+
+class SuccessSearchPatients extends ManagerState {}
+
+class ErrorSearchPatients extends ManagerState {}
+
+// Search Patients
+// Search Medications
+class LoadingSearchMedications extends ManagerState {}
+
+class SuccessSearchMedications extends ManagerState {}
+
+class ErrorSearchMedications extends ManagerState {}
+// Search Medications
+//======================================================================
+// Search
+//======================================================================
+
+//======================================================================
+// Set Password Default
+//======================================================================
+
+// Set Manger Password Default
+class LoadingSetMangerPasswordDefault extends ManagerState {}
+
+class SuccessSetMangerPasswordDefault extends ManagerState {}
+
+class ErrorSetMangerPasswordDefault extends ManagerState {}
+// Set Manger Password Default
+
+// Set Doctor Password Default
+class LoadingSetDoctorPasswordDefault extends ManagerState {}
+
+class SuccessSetDoctorPasswordDefault extends ManagerState {}
+
+class ErrorSetDoctorPasswordDefault extends ManagerState {}
+// Set Doctor Password Default
+
+// Set Nurse Password Default
+class LoadingSetNursePasswordDefault extends ManagerState {}
+
+class SuccessSetNursePasswordDefault extends ManagerState {}
+
+class ErrorSetNursePasswordDefault extends ManagerState {}
+// Set Nurse Password Default
+
+// Set Patient Password Default
+class LoadingSetPatientPasswordDefault extends ManagerState {}
+
+class SuccessSetPatientPasswordDefault extends ManagerState {}
+
+class ErrorSetPatientPasswordDefault extends ManagerState {}
+// Set Patient Password Default
+
+//======================================================================
+// Set Password Default
 //======================================================================

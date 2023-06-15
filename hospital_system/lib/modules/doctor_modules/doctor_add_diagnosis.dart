@@ -127,7 +127,7 @@ class DoctorAddDiagnosis extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       state is LoadingAddDiagnosis
-                          ? const Center(child: CircularProgressIndicator())
+                          ? Center(child: loading)
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: MaterialButton(

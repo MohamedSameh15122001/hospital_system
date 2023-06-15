@@ -14,7 +14,7 @@ class GetPatientDiagnosisModel {
 class Result {
   String? sId;
   Patient? patient;
-  Patient? doctor;
+  Doctor? doctor;
   String? date;
   String? diagnosis;
   String? prescription;
@@ -24,7 +24,7 @@ class Result {
     sId = json['_id'];
     patient =
         json['patient'] != null ? Patient.fromJson(json['patient']) : null;
-    doctor = json['doctor'] != null ? Patient.fromJson(json['doctor']) : null;
+    doctor = json['doctor'] != null ? Doctor.fromJson(json['doctor']) : null;
     date = json['date'];
     diagnosis = json['diagnosis'];
     prescription = json['prescription'];
@@ -35,9 +35,25 @@ class Result {
 class Patient {
   String? name;
   String? id;
+  String? dateOfBirth;
+  String? phone;
 
   Patient.fromJson(Map<String, dynamic> json) {
     name = json['name'];
+    id = json['Id'];
+    dateOfBirth = json['dateOfBirth'];
+    phone = json['phone'];
+  }
+}
+
+class Doctor {
+  String? name;
+  String? specialty;
+  String? id;
+
+  Doctor.fromJson(Map<String, dynamic> json) {
+    name = json['name'];
+    specialty = json['specialty'];
     id = json['Id'];
   }
 }

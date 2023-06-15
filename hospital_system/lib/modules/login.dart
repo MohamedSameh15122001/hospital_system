@@ -52,7 +52,7 @@ class Login extends StatelessWidget {
                             ),
                             validator: (value) {
                               if (value!.isEmpty) {
-                                return 'Please enter your name';
+                                return 'Please enter your ID';
                               }
                               return null;
                             },
@@ -73,6 +73,11 @@ class Login extends StatelessWidget {
                             validator: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter your password';
+                              }
+                              RegExp regex =
+                                  RegExp(r'^(?=.*[a-zA-Z])(?=.*\d).{8,}$');
+                              if (!regex.hasMatch(value)) {
+                                return 'Password must contain at least one letter, one digit, and be at least 8 characters long';
                               }
                               return null;
                             },
@@ -141,7 +146,7 @@ class Login extends StatelessWidget {
                                   state is LoadingDoctorLogin ||
                                   state is LoadingNurseLogin ||
                                   state is LoadingPatientLogin
-                              ? const Center(child: CircularProgressIndicator())
+                              ? Center(child: loading)
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(

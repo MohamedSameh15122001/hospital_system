@@ -144,191 +144,199 @@ class _MangerUpdateMedicationState extends State<MangerUpdateMedication> {
             ],
           ),
           body: state is LoadingGetSpecificMedication
-              ? const Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Form(
-                      key: formKey,
-                      child: AnimationLimiter(
-                        child: Column(
-                            children: AnimationConfiguration.toStaggeredList(
-                          duration: const Duration(milliseconds: 500),
-                          childAnimationBuilder: (widget) => FlipAnimation(
-                            child: FadeInAnimation(
-                              child: widget,
-                            ),
-                          ),
-                          children: [
-                            state is LoadingDeleteMedication
-                                ? const Center(
-                                    child: LinearProgressIndicator(
-                                    color: Colors.teal,
-                                  ))
-                                : Container(),
-                            const SizedBox(height: 20.0),
-                            // Image.asset(
-                            //   'lib/assets/images/medication.jpg',
-                            //   width: mediaQuery(context).width * .80,
-                            // ),
-                            const CircleAvatar(
-                              radius: 100,
-                              backgroundImage: AssetImage(
-                                  'lib/assets/images/medication.jpg'),
-                            ),
-                            const SizedBox(height: 40.0),
-                            TextFormField(
-                              controller: nameController,
-                              decoration: InputDecoration(
-                                labelText: 'Name',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
+              ? Center(child: loading)
+              : state is ErrorGetSpecificMedication
+                  ? Center(
+                      child: Text(cubit.errorModel!.message!),
+                    )
+                  : SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Form(
+                          key: formKey,
+                          child: AnimationLimiter(
+                            child: Column(
+                                children:
+                                    AnimationConfiguration.toStaggeredList(
+                              duration: const Duration(milliseconds: 500),
+                              childAnimationBuilder: (widget) => FlipAnimation(
+                                child: FadeInAnimation(
+                                  child: widget,
                                 ),
                               ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter name';
-                                } else if (value.length < 3) {
-                                  return 'Name must be between min 3 characters';
-                                } else if (value.length > 30) {
-                                  return 'Name must be between max 30 characters';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 16.0),
-                            TextFormField(
-                              controller: activeIngredientsController,
-                              decoration: InputDecoration(
-                                labelText: 'Active Ingredients',
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: mainColor,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
+                              children: [
+                                state is LoadingDeleteMedication
+                                    ? Center(
+                                        child: LinearProgressIndicator(
+                                        color: Colors.teal,
+                                        backgroundColor: mainColor,
+                                      ))
+                                    : Container(),
+                                const SizedBox(height: 20.0),
+                                // Image.asset(
+                                //   'lib/assets/images/medication.jpg',
+                                //   width: mediaQuery(context).width * .80,
+                                // ),
+                                const CircleAvatar(
+                                  radius: 100,
+                                  backgroundImage: AssetImage(
+                                      'lib/assets/images/medication.jpg'),
                                 ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter active ingredients';
-                                } else if (value.length < 3) {
-                                  return 'Active ingredients must be between min 3 characters';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 16.0),
-                            TextFormField(
-                              controller: dosesController,
-                              decoration: InputDecoration(
-                                labelText: 'Doses',
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: mainColor,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter doses';
-                                } else if (value.length < 3) {
-                                  return 'Doses must be between min 3 characters';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 16.0),
-                            TextFormField(
-                              controller: warningsController,
-                              decoration: InputDecoration(
-                                labelText: 'Warnings',
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: mainColor,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter warnings';
-                                } else if (value.length < 3) {
-                                  return 'Warnings must be between min 3 characters';
-                                } else if (value.length > 1000) {
-                                  return 'Warnings must be between max 1000 characters';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 16.0),
-                            TextFormField(
-                              controller: sideEffectsController,
-                              decoration: InputDecoration(
-                                labelText: 'Side Effects',
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: mainColor,
-                                    width: 2.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value!.isEmpty) {
-                                  return 'Please enter side effects';
-                                } else if (value.length < 3) {
-                                  return 'Side Effects must be between min 3 characters';
-                                } else if (value.length > 1000) {
-                                  return 'Side Effects must be between max 1000 characters';
-                                }
-                                return null;
-                              },
-                            ),
-                            const SizedBox(height: 20),
-                            state is LoadingUpdateMedication
-                                ? const Center(
-                                    child: CircularProgressIndicator())
-                                : ClipRRect(
-                                    borderRadius: BorderRadius.circular(20),
-                                    child: MaterialButton(
-                                      onPressed: () async {
-                                        if (formKey.currentState!.validate()) {
-                                          await cubit.updateMedication(
-                                              name: nameController.text,
-                                              activeIngredients:
-                                                  activeIngredientsController
-                                                      .text,
-                                              doses: dosesController.text,
-                                              sideEffects:
-                                                  sideEffectsController.text,
-                                              warnings: warningsController.text,
-                                              id: widget.id,
-                                              token: token!,
-                                              context: context);
-                                        }
-                                      },
-                                      color: mainColor,
-                                      minWidth: mediaQuery(context).width,
-                                      height: 50,
-                                      child: const Text(
-                                        'UPDATE',
-                                        style: TextStyle(
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                const SizedBox(height: 40.0),
+                                TextFormField(
+                                  controller: nameController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Name',
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
                                     ),
                                   ),
-                          ],
-                        )),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter name';
+                                    } else if (value.length < 3) {
+                                      return 'Name must be between min 3 characters';
+                                    } else if (value.length > 30) {
+                                      return 'Name must be between max 30 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16.0),
+                                TextFormField(
+                                  controller: activeIngredientsController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Active Ingredients',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: mainColor,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter active ingredients';
+                                    } else if (value.length < 3) {
+                                      return 'Active ingredients must be between min 3 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16.0),
+                                TextFormField(
+                                  controller: dosesController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Doses',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: mainColor,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter doses';
+                                    } else if (value.length < 3) {
+                                      return 'Doses must be between min 3 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16.0),
+                                TextFormField(
+                                  controller: warningsController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Warnings',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: mainColor,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter warnings';
+                                    } else if (value.length < 3) {
+                                      return 'Warnings must be between min 3 characters';
+                                    } else if (value.length > 1000) {
+                                      return 'Warnings must be between max 1000 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 16.0),
+                                TextFormField(
+                                  controller: sideEffectsController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Side Effects',
+                                    border: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: mainColor,
+                                        width: 2.0,
+                                      ),
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                  ),
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter side effects';
+                                    } else if (value.length < 3) {
+                                      return 'Side Effects must be between min 3 characters';
+                                    } else if (value.length > 1000) {
+                                      return 'Side Effects must be between max 1000 characters';
+                                    }
+                                    return null;
+                                  },
+                                ),
+                                const SizedBox(height: 20),
+                                state is LoadingUpdateMedication
+                                    ? Center(child: loading)
+                                    : ClipRRect(
+                                        borderRadius: BorderRadius.circular(20),
+                                        child: MaterialButton(
+                                          onPressed: () async {
+                                            if (formKey.currentState!
+                                                .validate()) {
+                                              await cubit.updateMedication(
+                                                  name: nameController.text,
+                                                  activeIngredients:
+                                                      activeIngredientsController
+                                                          .text,
+                                                  doses: dosesController.text,
+                                                  sideEffects:
+                                                      sideEffectsController
+                                                          .text,
+                                                  warnings:
+                                                      warningsController.text,
+                                                  id: widget.id,
+                                                  token: token!,
+                                                  context: context);
+                                            }
+                                          },
+                                          color: mainColor,
+                                          minWidth: mediaQuery(context).width,
+                                          height: 50,
+                                          child: const Text(
+                                            'UPDATE',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                        ),
+                                      ),
+                              ],
+                            )),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
         );
       },
     );

@@ -69,6 +69,50 @@ class ManagerCubit extends Cubit<ManagerState> {
   SuccessModel? successModel;
   LoginSuccessModel? loginSuccessModel;
 
+  // Change Manger Password
+  Future<void> changeMangerPassword({
+    required String oldPassword,
+    required String newPassword,
+    required String token,
+    required context,
+  }) async {
+    emit(LoadingChangeMangerPassword());
+
+    // Convert the request body to JSON
+    String jsonBody =
+        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
+
+    try {
+      // Make the POST request
+      final response = await http.post(
+        Uri.parse('$url$mangers$profile$changePass'),
+        headers: {contentType: applicationJson, 'token': token},
+        body: jsonBody,
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        await signOut(context);
+        emit(SuccessChangeMangerPassword());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorChangeMangerPassword());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorChangeMangerPassword());
+    }
+  }
+  // Create Manger Account
+
   // get manger profile
   GetMangerProfileModel? getMangerProfileModel;
   Future<void> getMangerProfile({
@@ -1371,5 +1415,331 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   //======================================================================
   // End Medication
+  //======================================================================
+
+  //======================================================================
+  // Search
+  //======================================================================
+  // Search Mangers
+  GetAllMangersModel? searchGetAllMangersModel;
+  Future<void> searchMangers(
+      {required String token, required String input}) async {
+    emit(LoadingSearchMangers());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$mangers/?keyword=$input'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        searchGetAllMangersModel = GetAllMangersModel.fromJson(successResponse);
+        emit(SuccessSearchMangers());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSearchMangers());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSearchMangers());
+    }
+  }
+  // Search Mangers
+
+  // Search Doctors
+  GetAllDoctorsModel? searchGetAllDoctorsModel;
+  Future<void> searchDoctors(
+      {required String token, required String input}) async {
+    emit(LoadingSearchDoctors());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$doctors/?keyword=$input'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        searchGetAllDoctorsModel = GetAllDoctorsModel.fromJson(successResponse);
+        emit(SuccessSearchDoctors());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSearchDoctors());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSearchDoctors());
+    }
+  }
+  // Search Doctors
+
+  // Search Nurses
+  GetAllNursesModel? searchGetAllNursesModel;
+  Future<void> searchNurses(
+      {required String token, required String input}) async {
+    emit(LoadingSearchNurses());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$nurses/?keyword=$input'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        searchGetAllNursesModel = GetAllNursesModel.fromJson(successResponse);
+        emit(SuccessSearchNurses());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSearchNurses());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSearchNurses());
+    }
+  }
+  // Search Nurses
+
+  // Search Patients
+  GetAllPatientsModel? searchGetAllPatientsModel;
+  Future<void> searchPatients(
+      {required String token, required String input}) async {
+    emit(LoadingSearchPatients());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$patients/?keyword=$input'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        searchGetAllPatientsModel =
+            GetAllPatientsModel.fromJson(successResponse);
+        emit(SuccessSearchPatients());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSearchPatients());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSearchPatients());
+    }
+  }
+  // Search Patients
+
+  // Search Medications
+  GetAllMedicationsModel? searchGetAllMedicationsModel;
+  Future<void> searchMedications(
+      {required String token, required String input}) async {
+    emit(LoadingSearchMedications());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$medications/?keyword=$input'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        searchGetAllMedicationsModel =
+            GetAllMedicationsModel.fromJson(successResponse);
+        emit(SuccessSearchMedications());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSearchMedications());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSearchMedications());
+    }
+  }
+  // Search Medications
+  //======================================================================
+  // Search
+  //======================================================================
+
+  //======================================================================
+  // Set Password Default
+  //======================================================================
+
+  // Set Manger Password Default
+  Future<void> setMangerPasswordDefault(
+      {required String token, required String id, required context}) async {
+    emit(LoadingSetMangerPasswordDefault());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$mangers$defaultPassword/$id'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        Navigator.pop(context);
+        emit(SuccessSetMangerPasswordDefault());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSetMangerPasswordDefault());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSetMangerPasswordDefault());
+    }
+  }
+  // Set Manger Password Default
+
+  // Set Doctor Password Default
+  Future<void> setDoctorPasswordDefault(
+      {required String token, required String id, required context}) async {
+    emit(LoadingSetDoctorPasswordDefault());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$doctors$defaultPassword/$id'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        Navigator.pop(context);
+        emit(SuccessSetDoctorPasswordDefault());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSetDoctorPasswordDefault());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSetDoctorPasswordDefault());
+    }
+  }
+  // Set Doctor Password Default
+
+  // Set Nurse Password Default
+  Future<void> setNursePasswordDefault(
+      {required String token, required String id, required context}) async {
+    emit(LoadingSetNursePasswordDefault());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$nurses$defaultPassword/$id'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        Navigator.pop(context);
+        emit(SuccessSetNursePasswordDefault());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSetNursePasswordDefault());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSetNursePasswordDefault());
+    }
+  }
+  // Set Nurse Password Default
+
+  // Set Patient Password Default
+  Future<void> setPatientPasswordDefault(
+      {required String token, required String id, required context}) async {
+    emit(LoadingSetPatientPasswordDefault());
+
+    try {
+      // Make the GET request
+      final response = await http.get(
+        Uri.parse('$url$patients$defaultPassword/$id'),
+        headers: {contentType: applicationJson, 'token': token},
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        Navigator.pop(context);
+        emit(SuccessSetPatientPasswordDefault());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorSetPatientPasswordDefault());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorSetPatientPasswordDefault());
+    }
+  }
+  // Set Patient Password Default
+
+  //======================================================================
+  // Set Password Default
   //======================================================================
 }

@@ -55,3 +55,50 @@ class SuccessGetNurseProfile extends NurseState {}
 
 class ErrorGetNurseProfile extends NurseState {}
 // get nurse profile
+
+//=====================================
+// nurse notifications
+//=====================================
+
+// get all nurse notifications
+class LoadingGetAllNurseNotifications extends NurseState {}
+
+class SuccessGetAllNurseNotifications extends NurseState {}
+
+class ErrorGetAllNurseNotifications extends NurseState {}
+// get all nurse notifications
+
+// delete specific nurse notification
+class LoadingDeleteSpecificNurseNotification extends NurseState {}
+
+class SuccessDeleteSpecificNurseNotification extends NurseState {}
+
+class ErrorDeleteSpecificNurseNotification extends NurseState {}
+// delete specific nurse notification
+
+// delete all nurse notifications
+class LoadingDeleteAllNurseNotifications extends NurseState {}
+
+class SuccessDeleteAllNurseNotifications extends NurseState {}
+
+class ErrorDeleteAllNurseNotifications extends NurseState {}
+// delete all nurse notifications
+//=====================================
+// nurse notifications
+//=====================================
+
+// Change Nurse Password
+class LoadingChangeNursePassword extends NurseState {}
+
+class SuccessChangeNursePassword extends NurseState {}
+
+class ErrorChangeNursePassword extends NurseState {}
+// Change Nurse Password
+
+// Doctor Add Notes
+class LoadingDoctorAddNotes extends NurseState {}
+
+class SuccessDoctorAddNotes extends NurseState {}
+
+class ErrorDoctorAddNotes extends NurseState {}
+// Doctor Add Notes

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:hospital_system/modules/login.dart';
 import 'package:hospital_system/modules/no_connection.dart';
@@ -10,6 +11,9 @@ import 'package:hospital_system/shared/components/components.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 import 'package:intl/intl.dart';
 
+Widget loading = SpinKitHourGlass(
+  color: mainColor,
+);
 //
 List selectedMedicines = [];
 List<Map<String, String>> medicineToApi = [];

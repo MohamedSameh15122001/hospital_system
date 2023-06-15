@@ -25,23 +25,30 @@ void main() async {
   //firebase
   //===============================
   await Firebase.initializeApp();
-  // final firebaseMessagingService = FirebaseMessagingService();
-  // await firebaseMessagingService.initialize(navigatorKey);
 
-  await PushNotificationServicesApp.init(
-    fcmTokenUpdate: (fcm) {
-      // check user is login
-      // push to api
-    },
-    onNav: (type) {
-      // go to notification screen
+  await PushNotificationsService.init(
+    fcmTokenUpdate: (String fcm) {},
+    onNavigateInApp: (type) {
       navigatorKey.currentState!.push(FadeRoute(const NurseNotifications()));
     },
-    onMessage: () {
-      // let user to know new message
+    onMessageInApp: () {
       showToast(text: 'new notification', state: ToastStates.SUCCESS);
     },
   );
+  // await PushNotificationServicesApp.init(
+  //   fcmTokenUpdate: (fcm) {
+  //     // check user is login
+  //     // push to api
+  //   },
+  //   onNav: (type) {
+  //     // go to notification screen
+  //     navigatorKey.currentState!.push(FadeRoute(const NurseNotifications()));
+  //   },
+  //   onMessage: () {
+  //     // let user to know new message
+  //     showToast(text: 'new notification', state: ToastStates.SUCCESS);
+  //   },
+  // );
   //===============================
   //firebase
   //===============================

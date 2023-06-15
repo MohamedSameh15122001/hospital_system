@@ -217,4 +217,48 @@ class DoctorCubit extends Cubit<DoctorState> {
     }
   }
   // get doctor profile
+
+  // Change Doctor Password
+  Future<void> changeDoctorPassword({
+    required String oldPassword,
+    required String newPassword,
+    required String token,
+    required context,
+  }) async {
+    emit(LoadingChangeDoctorPassword());
+
+    // Convert the request body to JSON
+    String jsonBody =
+        jsonEncode({'oldPassword': oldPassword, 'newPassword': newPassword});
+
+    try {
+      // Make the POST request
+      final response = await http.post(
+        Uri.parse('$url$doctors$profile$changePass'),
+        headers: {contentType: applicationJson, 'token': token},
+        body: jsonBody,
+      );
+
+      // Check the status code of the response
+      if (response.statusCode == 200) {
+        // Request successful
+        Map<String, dynamic> successResponse = jsonDecode(response.body);
+        successModel = SuccessModel.fromJson(successResponse);
+        showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
+        await signOut(context);
+        emit(SuccessChangeDoctorPassword());
+      } else {
+        // Request failed
+        Map<String, dynamic> errorResponse = jsonDecode(response.body);
+        errorModel = ErrorModel.fromJson(errorResponse);
+        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        emit(ErrorChangeDoctorPassword());
+      }
+    } catch (e) {
+      // An error occurred
+      // showToast(text: 'error $e', state: ToastStates.ERROR);
+      emit(ErrorChangeDoctorPassword());
+    }
+  }
+  // Create Doctor Account
 }

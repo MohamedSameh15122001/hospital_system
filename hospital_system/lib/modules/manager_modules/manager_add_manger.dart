@@ -147,7 +147,7 @@ class MangerAddManger extends StatelessWidget {
                           ),
                           const SizedBox(height: 20),
                           state is LoadingCreateMangerAccount
-                              ? const Center(child: CircularProgressIndicator())
+                              ? Center(child: loading)
                               : ClipRRect(
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(

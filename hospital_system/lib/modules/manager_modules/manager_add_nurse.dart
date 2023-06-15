@@ -194,7 +194,7 @@ class MangerAddNurse extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       state is LoadingCreateNurseAccount
-                          ? const Center(child: CircularProgressIndicator())
+                          ? Center(child: loading)
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: MaterialButton(

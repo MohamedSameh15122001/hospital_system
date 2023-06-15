@@ -170,7 +170,7 @@ class MangerAddDoctor extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       state is LoadingCreateDoctorAccount
-                          ? const Center(child: CircularProgressIndicator())
+                          ? Center(child: loading)
                           : ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: MaterialButton(

@@ -35,3 +35,17 @@ const String complated = '/complated';
 const String profile = '/profile';
 
 const String appointmentes = '/appointmentes';
+
+const String notifications = '/notifications';
+
+const String nurse = '/nurse';
+
+const String delete = '/delete';
+
+const String patient = '/patient';
+
+const String deleteAll = '/deleteAll';
+
+const String defaultPassword = '/defaultPassword';
+
+const String changePass = '/changePass';
