@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:hospital_system/main.dart';
 import 'package:hospital_system/modules/doctor_modules/doctor_home.dart';
 import 'package:hospital_system/modules/login.dart';
 import 'package:hospital_system/modules/manager_modules/manager_home.dart';
 import 'package:hospital_system/modules/nurse_modules/nurse_layout.dart';
+import 'package:hospital_system/modules/nurse_modules/nurse_notifications.dart';
 import 'package:hospital_system/modules/patient_modules/patient_layout.dart';
+import 'package:hospital_system/shared/another/push_notification_service.dart';
+import 'package:hospital_system/shared/components/components.dart';
 import 'package:hospital_system/shared/components/constants.dart';
 import 'package:hospital_system/shared/components/end_points.dart';
 
@@ -17,6 +21,15 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    PushNotificationsService.init(
+      fcmTokenUpdate: (String fcm) {},
+      onNavigateInApp: (type) {
+        navigatorKey.currentState!.push(FadeRoute(const NurseNotifications()));
+      },
+      onMessageInApp: () {
+        showToast(text: 'new notification', state: ToastStates.SUCCESS);
+      },
+    );
     // SystemChrome.setSystemUIOverlayStyle(
     //   const SystemUiOverlayStyle(
     //     statusBarColor: Color.fromARGB(255, 68, 70, 84),
