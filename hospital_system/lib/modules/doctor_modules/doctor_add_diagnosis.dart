@@ -132,6 +132,13 @@ class DoctorAddDiagnosis extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               child: MaterialButton(
                                 onPressed: () async {
+                                  prescriptionController.text =
+                                      prescriptionController.text.trim();
+
+                                  diagnoseController.text =
+                                      diagnoseController.text.trim();
+
+                                  idController.text = idController.text.trim();
                                   if (formKey.currentState!.validate()) {
                                     await cubit.addDiagnosis(
                                         diagnosis:

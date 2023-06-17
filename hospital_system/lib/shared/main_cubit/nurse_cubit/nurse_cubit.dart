@@ -78,6 +78,7 @@ class NurseCubit extends Cubit<NurseState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         Navigator.pop(context);
+        await getCompletedAppointments(token: token);
         // await getAllMangers(token: token);
         emit(SuccessAddAppointment());
       } else {
@@ -222,6 +223,8 @@ class NurseCubit extends Cubit<NurseState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         await getCompletedAppointments(token: token);
+        medicineToApi = [];
+        selectedMedicines = [];
         emit(SuccessCheckComplete());
       } else {
         // Request failed

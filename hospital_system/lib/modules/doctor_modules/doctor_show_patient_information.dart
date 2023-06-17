@@ -122,7 +122,11 @@ class _DoctorShowPatientInformationsState
                               ? Center(
                                   child: Text(mangerCubit.errorModel!.message!),
                                 )
-                              : patientInformations(mangerCubit),
+                              : mangerCubit.getSpecificPatientModel == null
+                                  ? Center(
+                                      child: loading,
+                                    )
+                                  : patientInformations(mangerCubit),
                       //====================================================
                       // end tab (1) Patient Informations
                       //====================================================
@@ -134,7 +138,12 @@ class _DoctorShowPatientInformationsState
                           : doctorState is ErrorGetPatientWithHisDiagnosis
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!))
-                              : diagnose(doctorState, doctorCubit),
+                              : doctorCubit.getPatientWithHisDiagnosisModel ==
+                                      null
+                                  ? Center(
+                                      child: loading,
+                                    )
+                                  : diagnose(doctorState, doctorCubit),
                       //===============================================================
                       // end tab (2) Diagnose
                       //===============================================================
@@ -150,7 +159,11 @@ class _DoctorShowPatientInformationsState
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
                                 )
-                              : tasks(nurseCubit, specificPatientModel),
+                              : nurseCubit.getAllPatientAppointmentModel == null
+                                  ? Center(
+                                      child: loading,
+                                    )
+                                  : tasks(nurseCubit, specificPatientModel),
                       //===============================================================
                       // end tab (3) Tasks
                       //===============================================================
@@ -530,12 +543,18 @@ class _DoctorShowPatientInformationsState
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(
                                     onPressed: () async {
+                                      prescriptionController.text =
+                                          prescriptionController.text.trim();
+                                      diagnoseController.text =
+                                          diagnoseController.text.trim();
                                       if (formKey.currentState!.validate()) {
                                         await doctorCubit
                                             .updatePatientDiagnosis(
-                                          prescription:
-                                              prescriptionController.text,
-                                          diagnosis: diagnoseController.text,
+                                          prescription: prescriptionController
+                                              .text
+                                              .trim(),
+                                          diagnosis:
+                                              diagnoseController.text.trim(),
                                           id: widget.id,
                                           token: token!,
                                         );

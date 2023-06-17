@@ -52,118 +52,131 @@ class MangerSearchNurse extends StatelessWidget {
                                 ? const Center(
                                     child: Text('No Nurses!'),
                                   )
-                                : Expanded(
-                                    child: ListView.builder(
-                                      physics: const BouncingScrollPhysics(),
-                                      itemCount: cubit.searchGetAllNursesModel!
-                                          .result!.length,
-                                      itemBuilder: (context, index) {
-                                        var model = cubit
-                                            .searchGetAllNursesModel!
-                                            .result![index];
-                                        return AnimationConfiguration
-                                            .staggeredList(
-                                          position: index,
-                                          delay:
-                                              const Duration(milliseconds: 100),
-                                          child: SlideAnimation(
-                                            duration: const Duration(
-                                                milliseconds: 2500),
-                                            curve:
-                                                Curves.fastLinearToSlowEaseIn,
-                                            horizontalOffset: 30, //-300
-                                            verticalOffset: 300, //-850
-                                            child: FlipAnimation(
-                                              duration: const Duration(
-                                                  milliseconds: 3000),
-                                              curve:
-                                                  Curves.fastLinearToSlowEaseIn,
-                                              flipAxis: FlipAxis.y,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  navigateToWithFade(
-                                                      context,
-                                                      MangerUpdateNurse(
-                                                        id: model.sId!,
-                                                      ));
-                                                },
-                                                child: Container(
-                                                  margin:
-                                                      const EdgeInsets.all(8),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: [
-                                                      BoxShadow(
-                                                        color: Colors
-                                                            .grey.shade300,
-                                                        blurRadius: 10,
-                                                        offset:
-                                                            const Offset(0, 4),
-                                                      )
-                                                    ],
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    color: Colors.white,
-                                                  ),
-                                                  child: ListTile(
-                                                    leading: CircleAvatar(
-                                                      radius: 30,
-                                                      backgroundColor:
-                                                          const Color(
-                                                              0x9650DEC9),
-                                                      backgroundImage:
-                                                          NetworkImage(model
-                                                              .profileImage!),
-                                                    ),
-                                                    title: Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              top: 12.0),
-                                                      child: Text(
-                                                        model.name!,
-                                                        style: const TextStyle(
-                                                            fontSize: 20),
+                                : cubit.searchGetAllNursesModel == null
+                                    ? Center(
+                                        child: loading,
+                                      )
+                                    : Expanded(
+                                        child: ListView.builder(
+                                          physics:
+                                              const BouncingScrollPhysics(),
+                                          itemCount: cubit
+                                              .searchGetAllNursesModel!
+                                              .result!
+                                              .length,
+                                          itemBuilder: (context, index) {
+                                            var model = cubit
+                                                .searchGetAllNursesModel!
+                                                .result![index];
+                                            return AnimationConfiguration
+                                                .staggeredList(
+                                              position: index,
+                                              delay: const Duration(
+                                                  milliseconds: 100),
+                                              child: SlideAnimation(
+                                                duration: const Duration(
+                                                    milliseconds: 2500),
+                                                curve: Curves
+                                                    .fastLinearToSlowEaseIn,
+                                                horizontalOffset: 30, //-300
+                                                verticalOffset: 300, //-850
+                                                child: FlipAnimation(
+                                                  duration: const Duration(
+                                                      milliseconds: 3000),
+                                                  curve: Curves
+                                                      .fastLinearToSlowEaseIn,
+                                                  flipAxis: FlipAxis.y,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      navigateToWithFade(
+                                                          context,
+                                                          MangerUpdateNurse(
+                                                            id: model.sId!,
+                                                          ));
+                                                    },
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              8),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: [
+                                                          BoxShadow(
+                                                            color: Colors
+                                                                .grey.shade300,
+                                                            blurRadius: 10,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 4),
+                                                          )
+                                                        ],
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        color: Colors.white,
                                                       ),
-                                                    ),
-                                                    subtitle: Column(
-                                                      // mainAxisAlignment:
-                                                      //     MainAxisAlignment.spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        const SizedBox(
-                                                            height: 8),
-                                                        Text('ID: ${model.id}'),
-                                                        const SizedBox(
-                                                            height: 4),
-                                                        Text(
-                                                            'Phone: ${model.phone}'),
-                                                        const SizedBox(
-                                                            height: 4),
-                                                        Text(
-                                                            'Email: ${model.email}'),
-                                                        const SizedBox(
-                                                            height: 4),
-                                                        Text(
-                                                            'Address: ${model.address}'),
-                                                        const SizedBox(
-                                                            height: 4),
-                                                        Text(
-                                                            'department: ${model.department}'),
-                                                        const SizedBox(
-                                                            height: 8),
-                                                      ],
+                                                      child: ListTile(
+                                                        leading: CircleAvatar(
+                                                          radius: 30,
+                                                          backgroundColor:
+                                                              const Color(
+                                                                  0x9650DEC9),
+                                                          backgroundImage:
+                                                              NetworkImage(model
+                                                                  .profileImage!),
+                                                        ),
+                                                        title: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  top: 12.0),
+                                                          child: Text(
+                                                            model.name!,
+                                                            style:
+                                                                const TextStyle(
+                                                                    fontSize:
+                                                                        20),
+                                                          ),
+                                                        ),
+                                                        subtitle: Column(
+                                                          // mainAxisAlignment:
+                                                          //     MainAxisAlignment.spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            const SizedBox(
+                                                                height: 8),
+                                                            Text(
+                                                                'ID: ${model.id}'),
+                                                            const SizedBox(
+                                                                height: 4),
+                                                            Text(
+                                                                'Phone: ${model.phone}'),
+                                                            const SizedBox(
+                                                                height: 4),
+                                                            Text(
+                                                                'Email: ${model.email}'),
+                                                            const SizedBox(
+                                                                height: 4),
+                                                            Text(
+                                                                'Address: ${model.address}'),
+                                                            const SizedBox(
+                                                                height: 4),
+                                                            Text(
+                                                                'department: ${model.department}'),
+                                                            const SizedBox(
+                                                                height: 8),
+                                                          ],
+                                                        ),
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
+                                            );
+                                          },
+                                        ),
+                                      ),
                   ],
                 ),
               ),

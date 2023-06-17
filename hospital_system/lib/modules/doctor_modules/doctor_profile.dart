@@ -45,124 +45,136 @@ class DoctorProfile extends StatelessWidget {
                   ? Center(
                       child: Text(cubit.errorModel!.message!),
                     )
-                  : SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(0.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: AnimationConfiguration.toStaggeredList(
-                            duration: const Duration(milliseconds: 500),
-                            childAnimationBuilder: (widget) => SlideAnimation(
-                              horizontalOffset: 50.0,
-                              child: FadeInAnimation(
-                                child: widget,
-                              ),
-                            ),
-                            children: [
-                              SizedBox(
-                                height: MediaQuery.of(context).size.height * .2,
-                                width: MediaQuery.of(context).size.width,
-                                child: Stack(
-                                  children: [
-                                    SizedBox(
-                                      height:
-                                          MediaQuery.of(context).size.height *
+                  : cubit.getDoctorProfileModel == null
+                      ? Center(
+                          child: loading,
+                        )
+                      : SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(0.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: AnimationConfiguration.toStaggeredList(
+                                duration: const Duration(milliseconds: 500),
+                                childAnimationBuilder: (widget) =>
+                                    SlideAnimation(
+                                  horizontalOffset: 50.0,
+                                  child: FadeInAnimation(
+                                    child: widget,
+                                  ),
+                                ),
+                                children: [
+                                  SizedBox(
+                                    height:
+                                        MediaQuery.of(context).size.height * .2,
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Stack(
+                                      children: [
+                                        SizedBox(
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               .2,
-                                      width: MediaQuery.of(context).size.width,
-                                      child: ClipPath(
-                                        clipper: _NameClipper(),
-                                        child: Container(color: mainColor),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: const Alignment(0, .2),
-                                      child: CircleAvatar(
-                                        radius: 60,
-                                        backgroundColor:
-                                            const Color(0x9650DEC9),
-                                        backgroundImage:
-                                            NetworkImage(model!.profileImage!),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Center(
-                                child: Text(
-                                  model.name!,
-                                  style: const TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 8),
-                                    Text(
-                                      'ID: ${model.id}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade800),
-                                    ),
-                                    const Divider(),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Phone: ${model.phone}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade800),
-                                    ),
-                                    const Divider(),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'Email: ${model.email}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade800),
-                                    ),
-                                    const Divider(),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      'specialty: ${model.specialty}',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Colors.grey.shade800),
-                                    ),
-                                    const Divider(),
-                                    const SizedBox(height: 8),
-                                    SizedBox(
-                                      width: 200,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(20),
-                                        child: MaterialButton(
-                                          onPressed: () {
-                                            navigateToWithFade(context,
-                                                DoctorChangePassword());
-                                          },
-                                          color: mainColor,
-                                          minWidth: mediaQuery(context).width,
-                                          height: 50,
-                                          child: const Text(
-                                            'CHANGE PASSWORD',
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.bold),
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          child: ClipPath(
+                                            clipper: _NameClipper(),
+                                            child: Container(color: mainColor),
                                           ),
                                         ),
-                                      ),
+                                        Align(
+                                          alignment: const Alignment(0, .2),
+                                          child: CircleAvatar(
+                                            radius: 60,
+                                            backgroundColor:
+                                                const Color(0x9650DEC9),
+                                            backgroundImage: NetworkImage(
+                                                model!.profileImage!),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  Center(
+                                    child: Text(
+                                      model.name!,
+                                      style: const TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          'ID: ${model.id}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey.shade800),
+                                        ),
+                                        const Divider(),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Phone: ${model.phone}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey.shade800),
+                                        ),
+                                        const Divider(),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'Email: ${model.email}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey.shade800),
+                                        ),
+                                        const Divider(),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          'specialty: ${model.specialty}',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.grey.shade800),
+                                        ),
+                                        const Divider(),
+                                        const SizedBox(height: 8),
+                                        SizedBox(
+                                          width: 200,
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                navigateToWithFade(context,
+                                                    DoctorChangePassword());
+                                              },
+                                              color: mainColor,
+                                              minWidth:
+                                                  mediaQuery(context).width,
+                                              height: 50,
+                                              child: const Text(
+                                                'CHANGE PASSWORD',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
-                    ),
           bottomSheet: Padding(
             padding: const EdgeInsets.all(16.0),
             child: ClipRRect(

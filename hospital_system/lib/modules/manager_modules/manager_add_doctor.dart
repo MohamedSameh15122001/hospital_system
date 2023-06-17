@@ -175,6 +175,15 @@ class MangerAddDoctor extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               child: MaterialButton(
                                 onPressed: () async {
+                                  idController.text = idController.text.trim();
+                                  nameController.text =
+                                      nameController.text.trim();
+                                  emailController.text =
+                                      emailController.text.trim();
+                                  phoneController.text =
+                                      phoneController.text.trim();
+                                  specialtyController.text =
+                                      specialtyController.text.trim();
                                   if (formKey.currentState!.validate()) {
                                     await cubit.createDoctorAccount(
                                         name: nameController.text.trim(),

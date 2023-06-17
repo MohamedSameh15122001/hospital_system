@@ -127,7 +127,11 @@ class _NurseShowPatientInformationsState
                               ? Center(
                                   child: Text(mangerCubit.errorModel!.message!),
                                 )
-                              : patientInformations(specificPatientModel),
+                              : mangerCubit.getSpecificPatientModel == null
+                                  ? Center(
+                                      child: loading,
+                                    )
+                                  : patientInformations(specificPatientModel),
                       //====================================================
                       // end tab (1) Patient Informations
                       //====================================================
@@ -140,7 +144,12 @@ class _NurseShowPatientInformationsState
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
                                 )
-                              : diagnose(diagnoseModel),
+                              : doctorCubit.getPatientWithHisDiagnosisModel ==
+                                      null
+                                  ? Center(
+                                      child: loading,
+                                    )
+                                  : diagnose(diagnoseModel),
                       //===============================================================
                       // end tab (2) Diagnose
                       //===============================================================
@@ -149,14 +158,18 @@ class _NurseShowPatientInformationsState
                       //===============================================================
                       // ignore: avoid_unnecessary_containers
                       nurseState is LoadingGetAllPatientAppointment
-                          ? nurseState is ErrorGetAllPatientAppointment
+                          ? Center(
+                              child: loading,
+                            )
+                          : nurseState is ErrorGetAllPatientAppointment
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
                                 )
-                              : Center(
-                                  child: loading,
-                                )
-                          : tasks(nurseCubit, specificPatientModel),
+                              : nurseCubit.getAllPatientAppointmentModel == null
+                                  ? Center(
+                                      child: loading,
+                                    )
+                                  : tasks(nurseCubit, specificPatientModel),
                       //===============================================================
                       // end tab (3) Tasks
                       //===============================================================

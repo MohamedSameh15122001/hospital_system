@@ -106,6 +106,43 @@ String formatDateToGetFromDatePicker(String dateStr) {
   return formattedDate;
 }
 
+String formatDateWithHours(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+
+  // Format the date
+  String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
+
+  // Format the time
+  String formattedTime = DateFormat('h:mm').format(dateTime);
+
+  // Determine if it's morning or evening
+  String timeOfDay = dateTime.hour < 12 ? 'AM' : 'PM';
+
+  // Combine the formatted date, time, and time of day
+  String formattedDateTime = '$formattedDate | $formattedTime $timeOfDay';
+
+  return formattedDateTime;
+}
+
+String formatDate(String dateTimeString) {
+  DateTime dateTime = DateTime.parse(dateTimeString);
+
+  // Format the date
+  String formattedDate = DateFormat('dd-MM-yyyy').format(dateTime);
+
+  // Format the time
+  String formattedTime = DateFormat('h:mm a').format(dateTime);
+  // Check if the hour is a single digit, add a leading zero if needed
+  // if (dateTime.hour < 10) {
+  //   formattedTime = '0$formattedTime';
+  // }
+
+  // Combine the formatted date and time
+  String formattedDateTime = '$formattedDate | $formattedTime';
+
+  return formattedDateTime;
+}
+
 // String getDate(formattedString) {
 //   DateTime dateTime = DateTime.parse(formattedString);
 //   String date = DateFormat.yMMMd().format(dateTime);

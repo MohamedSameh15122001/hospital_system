@@ -7,6 +7,7 @@ import 'package:hospital_system/modules/manager_modules/manager_home.dart';
 import 'package:hospital_system/modules/nurse_modules/nurse_layout.dart';
 import 'package:hospital_system/modules/nurse_modules/nurse_notifications.dart';
 import 'package:hospital_system/modules/patient_modules/patient_layout.dart';
+import 'package:hospital_system/modules/patient_modules/patient_notifications.dart';
 import 'package:hospital_system/shared/another/push_notification_service.dart';
 import 'package:hospital_system/shared/components/components.dart';
 import 'package:hospital_system/shared/components/constants.dart';
@@ -23,8 +24,14 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     PushNotificationsService.init(
       fcmTokenUpdate: (String fcm) {},
-      onNavigateInApp: (type) {
-        navigatorKey.currentState!.push(FadeRoute(const NurseNotifications()));
+      onNavigateInApp: (type) async {
+        if (who == 'nurse') {
+          navigatorKey.currentState!
+              .push(FadeRoute(const NurseNotifications()));
+        } else {
+          navigatorKey.currentState!
+              .push(FadeRoute(const PatientNotifications()));
+        }
       },
       onMessageInApp: () {
         showToast(text: 'new notification', state: ToastStates.SUCCESS);

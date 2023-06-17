@@ -316,6 +316,17 @@ class MangerAddPatient extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                               child: MaterialButton(
                                 onPressed: () async {
+                                  idController.text = idController.text.trim();
+                                  nameController.text =
+                                      nameController.text.trim();
+                                  emailController.text =
+                                      emailController.text.trim();
+                                  phoneController.text =
+                                      phoneController.text.trim();
+                                  addressController.text =
+                                      addressController.text.trim();
+                                  medicalHistoryController.text =
+                                      medicalHistoryController.text.trim();
                                   if (formKey.currentState!.validate()) {
                                     await cubit.createPatientAccount(
                                         sex: cubit.sex,

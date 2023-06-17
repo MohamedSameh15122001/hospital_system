@@ -182,6 +182,17 @@ class MangerAddMedication extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(
                                     onPressed: () async {
+                                      nameController.text =
+                                          nameController.text.trim();
+                                      activeIngredientsController.text =
+                                          activeIngredientsController.text
+                                              .trim();
+                                      dosesController.text =
+                                          dosesController.text.trim();
+                                      sideEffectsController.text =
+                                          sideEffectsController.text.trim();
+                                      warningsController.text =
+                                          warningsController.text.trim();
                                       if (formKey.currentState!.validate()) {
                                         await cubit.createMedication(
                                             name: nameController.text.trim(),

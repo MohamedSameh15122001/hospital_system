@@ -102,12 +102,18 @@ class PatientChangePassword extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(
                                     onPressed: () async {
+                                      oldPassController.text =
+                                          oldPassController.text.trim();
+                                      newPassController.text =
+                                          newPassController.text.trim();
                                       if (formKey.currentState!.validate()) {
                                         if (newPassController.text ==
                                             oldPassController.text) {
                                           cubit.changePatientPassword(
-                                            oldPassword: oldPassController.text,
-                                            newPassword: newPassController.text,
+                                            oldPassword:
+                                                oldPassController.text.trim(),
+                                            newPassword:
+                                                newPassController.text.trim(),
                                             token: token!,
                                             context: context,
                                           );

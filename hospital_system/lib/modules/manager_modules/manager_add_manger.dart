@@ -152,6 +152,14 @@ class MangerAddManger extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(
                                     onPressed: () async {
+                                      idController.text =
+                                          idController.text.trim();
+                                      nameController.text =
+                                          nameController.text.trim();
+                                      emailController.text =
+                                          emailController.text.trim();
+                                      phoneController.text =
+                                          phoneController.text.trim();
                                       if (formKey.currentState!.validate()) {
                                         await cubit.createMangerAccount(
                                             name: nameController.text.trim(),

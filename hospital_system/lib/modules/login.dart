@@ -151,6 +151,10 @@ class Login extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(20),
                                   child: MaterialButton(
                                     onPressed: () async {
+                                      idController.text =
+                                          idController.text.trim();
+                                      passwordController.text =
+                                          passwordController.text.trim();
                                       if (formKey.currentState!.validate()) {
                                         if (cubit.who == "Manger") {
                                           await cubit.mangerLogin(
