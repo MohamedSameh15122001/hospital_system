@@ -239,81 +239,66 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
                                                       },
                                                     ),
                                                   ),
-                                            const SizedBox(height: 20),
-                                            nurseState is LoadingAddAppointment
-                                                ? Center(child: loading)
-                                                : ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20),
-                                                    child: MaterialButton(
-                                                      onPressed: () async {
-                                                        idController.text =
-                                                            idController.text
-                                                                .trim();
-                                                        scheduleController
-                                                                .text =
-                                                            scheduleController
-                                                                .text
-                                                                .trim();
-                                                        if (formKey
-                                                            .currentState!
-                                                            .validate()) {
-                                                          if (medicineToApi
-                                                              .isEmpty) {
-                                                            showToast(
-                                                                text:
-                                                                    'must select at lest one medicne',
-                                                                state: ToastStates
-                                                                    .WARNING);
-                                                          } else {
-                                                            await nurseCubit.addAppointment(
-                                                                schedule: double.parse(
-                                                                    scheduleController
-                                                                        .text
-                                                                        .trim()),
-                                                                id: idController
-                                                                    .text
-                                                                    .trim(),
-                                                                medications:
-                                                                    medicineToApi,
-                                                                token: token!,
-                                                                context:
-                                                                    context);
-                                                          }
-                                                        } else {
-                                                          _scrollController
-                                                              .animateTo(
-                                                            0.0,
-                                                            duration: const Duration(
-                                                                milliseconds:
-                                                                    300), // Optional: Specify the duration of the scroll animation
-                                                            curve: Curves
-                                                                .ease, // Optional: Specify the curve of the scroll animation
-                                                          );
-                                                        }
-                                                      },
-                                                      color: mainColor,
-                                                      minWidth:
-                                                          mediaQuery(context)
-                                                              .width,
-                                                      height: 50,
-                                                      child: const Text(
-                                                        'ADD',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                    ),
-                                                  ),
                                           ]),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
+              bottomSheet: nurseState is LoadingAddAppointment
+                  ? Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: SizedBox(
+                          height: 50,
+                          width: double.infinity,
+                          child: Center(child: loading)),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: MaterialButton(
+                          onPressed: () async {
+                            idController.text = idController.text.trim();
+                            scheduleController.text =
+                                scheduleController.text.trim();
+                            if (formKey.currentState!.validate()) {
+                              if (medicineToApi.isEmpty) {
+                                showToast(
+                                    text: 'must select at lest one medicne',
+                                    state: ToastStates.WARNING);
+                              } else {
+                                await nurseCubit.addAppointment(
+                                    schedule: double.parse(
+                                        scheduleController.text.trim()),
+                                    id: idController.text.trim(),
+                                    medications: medicineToApi,
+                                    token: token!,
+                                    context: context);
+                              }
+                            } else {
+                              _scrollController.animateTo(
+                                0.0,
+                                duration: const Duration(
+                                    milliseconds:
+                                        300), // Optional: Specify the duration of the scroll animation
+                                curve: Curves
+                                    .ease, // Optional: Specify the curve of the scroll animation
+                              );
+                            }
+                          },
+                          color: mainColor,
+                          minWidth: mediaQuery(context).width,
+                          height: 50,
+                          child: const Text(
+                            'ADD',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
             );
           },
         );
