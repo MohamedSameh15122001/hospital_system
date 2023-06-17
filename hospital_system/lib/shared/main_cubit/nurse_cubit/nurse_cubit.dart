@@ -25,6 +25,20 @@ class NurseCubit extends Cubit<NurseState> {
 
   static NurseCubit get(context) => BlocProvider.of(context);
 
+  // change visible Password
+  bool isVisible = true;
+  void changeVisiblePassword() {
+    isVisible = !isVisible;
+    emit(ChangeVisiblePassword());
+  }
+
+  // change old visible Password
+  bool isVisibleOld = true;
+  void changeVisibleOldPassword() {
+    isVisibleOld = !isVisibleOld;
+    emit(ChangeVisibleOldPassword());
+  }
+
   // Bottom Navigation Bar
   var currentIndex = 0;
 

@@ -2,6 +2,12 @@ class NurseState {}
 
 class NurseInitial extends NurseState {}
 
+// change visible Password
+class ChangeVisiblePassword extends NurseState {}
+
+// change old visible Password
+class ChangeVisibleOldPassword extends NurseState {}
+
 //Change Bottom NavBar
 class ChangeBottomNavBar extends NurseState {}
 

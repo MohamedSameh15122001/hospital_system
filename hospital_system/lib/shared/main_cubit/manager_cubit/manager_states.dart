@@ -2,6 +2,12 @@ class ManagerState {}
 
 class ManagerInitial extends ManagerState {}
 
+// change visible Password
+class ChangeVisiblePassword extends ManagerState {}
+
+// change old visible Password
+class ChangeVisibleOldPassword extends ManagerState {}
+
 // change switch
 class ChangeSwitch extends ManagerState {}
 

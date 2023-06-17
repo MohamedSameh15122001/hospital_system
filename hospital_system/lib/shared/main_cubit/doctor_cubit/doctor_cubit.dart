@@ -17,6 +17,20 @@ class DoctorCubit extends Cubit<DoctorState> {
 
   static DoctorCubit get(context) => BlocProvider.of(context);
 
+  // change visible Password
+  bool isVisible = true;
+  void changeVisiblePassword() {
+    isVisible = !isVisible;
+    emit(ChangeVisiblePassword());
+  }
+
+  // change old visible Password
+  bool isVisibleOld = true;
+  void changeVisibleOldPassword() {
+    isVisibleOld = !isVisibleOld;
+    emit(ChangeVisibleOldPassword());
+  }
+
   ErrorModel? errorModel;
   SuccessModel? successModel;
 

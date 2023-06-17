@@ -59,9 +59,17 @@ class Login extends StatelessWidget {
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
+                            obscureText: cubit.isVisible,
                             controller: passwordController,
                             decoration: InputDecoration(
                               labelText: 'Password',
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    cubit.changeVisiblePassword();
+                                  },
+                                  icon: Icon(cubit.isVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(
                                   color: mainColor,

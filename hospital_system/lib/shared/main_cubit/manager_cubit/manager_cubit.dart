@@ -31,6 +31,20 @@ class ManagerCubit extends Cubit<ManagerState> {
 
   static ManagerCubit get(context) => BlocProvider.of(context);
 
+  // change visible Password
+  bool isVisible = true;
+  void changeVisiblePassword() {
+    isVisible = !isVisible;
+    emit(ChangeVisiblePassword());
+  }
+
+  // change old visible Password
+  bool isVisibleOld = true;
+  void changeVisibleOldPassword() {
+    isVisibleOld = !isVisibleOld;
+    emit(ChangeVisibleOldPassword());
+  }
+
   // change switch
   bool switchValue = false;
   Future<void> changeSwitch(bool newValue) async {

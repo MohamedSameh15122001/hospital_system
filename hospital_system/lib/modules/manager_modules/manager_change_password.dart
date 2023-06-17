@@ -51,8 +51,16 @@ class MangerChangePassword extends StatelessWidget {
                           ),
                           const SizedBox(height: 40.0),
                           TextFormField(
+                            obscureText: cubit.isVisibleOld,
                             controller: oldPassController,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    cubit.changeVisibleOldPassword();
+                                  },
+                                  icon: Icon(cubit.isVisibleOld
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
                               labelText: 'Old Password',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(20.0),
@@ -72,8 +80,16 @@ class MangerChangePassword extends StatelessWidget {
                           ),
                           const SizedBox(height: 16.0),
                           TextFormField(
+                            obscureText: cubit.isVisible,
                             controller: newPassController,
                             decoration: InputDecoration(
+                              suffixIcon: IconButton(
+                                  onPressed: () {
+                                    cubit.changeVisiblePassword();
+                                  },
+                                  icon: Icon(cubit.isVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off)),
                               labelText: 'New Password',
                               border: OutlineInputBorder(
                                 borderSide: BorderSide(

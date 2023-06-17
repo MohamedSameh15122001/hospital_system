@@ -2,6 +2,12 @@ class DoctorState {}
 
 class DoctorInitial extends DoctorState {}
 
+// change visible Password
+class ChangeVisiblePassword extends DoctorState {}
+
+// change old visible Password
+class ChangeVisibleOldPassword extends DoctorState {}
+
 // Add Diagnosis
 class LoadingAddDiagnosis extends DoctorState {}
 
