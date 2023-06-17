@@ -127,6 +127,7 @@ class PushNotificationsService {
       channel.id,
       channel.name,
       channelDescription: channel.description,
+      icon: 'lib/assets/images/hospital.png',
       priority: Priority.high,
       importance: Importance.max,
     );

@@ -241,7 +241,7 @@ class NurseCompletedAppointments extends StatelessWidget {
                                                                                   // medicineToApi = [];
                                                                                   // selectedMedicines = [];
                                                                                   for (var i = 0; i < model.medications!.length; i++) {
-                                                                                    selectedMedicines.add('${model.medications![i].medication!.name}\n${model.medications![i].medication!.doses}');
+                                                                                    selectedMedicines.add('${model.medications![i].medication!.name}:\n${model.medications![i].medication!.doses}');
                                                                                     medicineToApi.add({
                                                                                       'medication': model.medications![i].medication!.sId!,
                                                                                       'dose': model.medications![i].dose!,

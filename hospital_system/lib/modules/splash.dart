@@ -37,12 +37,7 @@ class SplashScreen extends StatelessWidget {
         showToast(text: 'new notification', state: ToastStates.SUCCESS);
       },
     );
-    // SystemChrome.setSystemUIOverlayStyle(
-    //   const SystemUiOverlayStyle(
-    //     statusBarColor: Color.fromARGB(255, 68, 70, 84),
-    //     statusBarIconBrightness: Brightness.dark,
-    //   ),
-    // );
+
     return SplashView(
       // logo: const FlutterLogo(),
       loadingIndicator: Padding(
@@ -60,10 +55,6 @@ class SplashScreen extends StatelessWidget {
         width: mediaQuery(context).width * .8,
       ),
 
-      // gradient: const LinearGradient(
-      //     begin: Alignment.topCenter,
-      //     end: Alignment.bottomCenter,
-      //     colors: <Color>[Colors.green, Colors.blue]),
       done: Done(
         token == null || token!.isEmpty
             ? Login()

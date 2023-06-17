@@ -183,9 +183,16 @@ class _NurseAddAppointmentState extends State<NurseAddAppointment> {
                                                       itemBuilder:
                                                           (context, index) {
                                                         return CheckboxListTile(
-                                                          title: Text(
-                                                              managerCubit
+                                                          title: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Text(managerCubit
                                                                   .med[index]),
+                                                              const Divider(),
+                                                            ],
+                                                          ),
                                                           value: selectedMedicines
                                                               .contains(
                                                                   managerCubit

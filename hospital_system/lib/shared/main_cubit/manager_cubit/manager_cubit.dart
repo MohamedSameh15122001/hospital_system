@@ -1279,7 +1279,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         getAllMedicationsModel =
             GetAllMedicationsModel.fromJson(successResponse);
         for (var element in getAllMedicationsModel!.result!) {
-          med.add('${element.name}\n${element.doses}');
+          med.add('${element.name}:\n${element.doses}');
         }
 
         emit(SuccessGetAllMedications());
