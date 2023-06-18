@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.hospital_system">
    <application
-        android:label="Hospital System"
+        android:label="Pharaonic Hospital"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
