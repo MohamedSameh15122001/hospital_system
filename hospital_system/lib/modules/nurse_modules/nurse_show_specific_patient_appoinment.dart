@@ -97,16 +97,16 @@ class NurseShowSpecificPatientAppoinment extends StatelessWidget {
                                       ],
                                     ),
                                     const SizedBox(height: 16),
-                                    const SizedBox(height: 16),
-                                    const Text(
-                                      'Nurse:',
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    const SizedBox(height: 8),
-                                    Text('Name: ${model.nurse!.name}'),
-                                    Text('ID: ${model.nurse!.id}'),
+                                    // const SizedBox(height: 16),
+                                    // const Text(
+                                    //   'Nurse:',
+                                    //   style: TextStyle(
+                                    //       fontSize: 18,
+                                    //       fontWeight: FontWeight.bold),
+                                    // ),
+                                    // const SizedBox(height: 8),
+                                    // Text('Name: ${model.nurse!.name}'),
+                                    // Text('ID: ${model.nurse!.id}'),
                                     const SizedBox(height: 16),
                                     const Text(
                                       'medications:',

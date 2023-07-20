@@ -123,7 +123,7 @@ class DoctorChangePassword extends StatelessWidget {
                                       newPassController.text =
                                           newPassController.text.trim();
                                       if (formKey.currentState!.validate()) {
-                                        if (newPassController.text ==
+                                        if (newPassController.text !=
                                             oldPassController.text) {
                                           cubit.changeDoctorPassword(
                                             oldPassword:

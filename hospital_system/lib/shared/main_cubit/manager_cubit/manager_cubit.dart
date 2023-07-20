@@ -49,10 +49,11 @@ class ManagerCubit extends Cubit<ManagerState> {
   bool switchValue = false;
   Future<void> changeSwitch(bool newValue) async {
     switchValue = newValue;
+
     switchValue
         ? await getAllPatients(token: token!)
         : await getAllPatientsBelongToDoctor(token: token!);
-    emit(ChangeSwitch());
+    // emit(ChangeSwitch());
   }
 
   // manger home page
@@ -366,6 +367,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         successModel = SuccessModel.fromJson(successResponse);
         showToast(text: successModel!.message!, state: ToastStates.SUCCESS);
         Navigator.pop(context);
+        await getAllMangers(token: token);
         emit(SuccessUpdateMangerAccount());
       } else {
         // Request failed
@@ -1790,7 +1792,7 @@ class ManagerCubit extends Cubit<ManagerState> {
         // Request failed
         Map<String, dynamic> errorResponse = jsonDecode(response.body);
         errorModel = ErrorModel.fromJson(errorResponse);
-        showToast(text: errorModel!.message!, state: ToastStates.WARNING);
+        // showToast(text: errorModel!.message!, state: ToastStates.WARNING);
         emit(ErrorGetAllPatientsBelongToDoctor());
       }
     } catch (e) {

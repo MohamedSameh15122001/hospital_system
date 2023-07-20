@@ -165,11 +165,17 @@ class _NurseShowPatientInformationsState
                               ? Center(
                                   child: Text(doctorCubit.errorModel!.message!),
                                 )
-                              : nurseCubit.getAllPatientAppointmentModel == null
-                                  ? Center(
-                                      child: loading,
+                              : nurseCubit.getAllPatientAppointmentModel!
+                                      .result!.isEmpty
+                                  ? const Center(
+                                      child: Text('No Tasks!'),
                                     )
-                                  : tasks(nurseCubit, specificPatientModel),
+                                  : nurseCubit.getAllPatientAppointmentModel ==
+                                          null
+                                      ? Center(
+                                          child: loading,
+                                        )
+                                      : tasks(nurseCubit, specificPatientModel),
                       //===============================================================
                       // end tab (3) Tasks
                       //===============================================================
